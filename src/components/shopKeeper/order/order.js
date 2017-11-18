@@ -73,7 +73,7 @@ class Order extends React.Component {
                         />
                     }
                     rightComponent={
-                        <Icon name='home' color="white" />
+                        <Icon name='home' color="white" onPress={() => navigate('ShopKeeperDashBoardScreen')} />
                     }
                     centerComponent={
                         <Text style={{ textAlign: 'center', color: 'white' }}>

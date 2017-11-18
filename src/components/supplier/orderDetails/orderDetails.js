@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-import { Button, List, ListItem, Icon } from 'react-native-elements';
+import { Button, List, ListItem, Icon, Card } from 'react-native-elements';
 import * as firebase from 'firebase';
 
-export default class OrderList extends React.Component {
+export default class OrderDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,6 +13,7 @@ export default class OrderList extends React.Component {
 
     }
     componentDidMount() {
+        console.log("params==>", this.props.navigation.state.params)
         firebase.database().ref('order/').on('value', snapshot => {
             snapshot.forEach((messageSnapshot) => {
                 let array = [];
@@ -24,32 +25,26 @@ export default class OrderList extends React.Component {
                         orderList: array
                     })
                 }
-                // // array.push(obj)
-                console.log('message snapshot==>', obj)
-                // // this.setState({
-                // //     orderList: array
-                // })
             })
         })
     }
     render() {
-        const { navigate } = this.props.navigation;
+        const params = this.props.navigation.state.params.key
         return (
             <View>
                 {console.log(this.state.orderList, "state of list")}
                 <Text>Your Orders </Text>
                 <ScrollView>
-                    <List>
-                        {this.state.orderList.map((l, i) => {
-                            console.log("list item", l)
-                            return (
-                                <ListItem
-                                    key={i}
-                                    title={"order by " + l.sk_info.name + l.date + l.time}
-                                    onPress={() => { navigate('OrderDetailsScreen', { key: i }) }}
-                                />)
-                        })}
-                    </List>
+
+                    <Card
+                        key={i}
+                        title={
+                            this.state.orderList.length !== 0 ?
+                                "order by " + this.state.orderList[0].time
+                                : ""
+                        }
+                    ></Card>
+
                 </ScrollView>
 
             </View>

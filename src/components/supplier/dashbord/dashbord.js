@@ -56,7 +56,7 @@ export default class App extends React.Component {
                 username: obj.name
             })
         })
-        firebase.database().ref('oreder/').on('value', (data) => {
+        firebase.database().ref('order/').on('value', (data) => {
             console.log(data.val())
             let obj = data.val();
             console.log("order obj", obj)

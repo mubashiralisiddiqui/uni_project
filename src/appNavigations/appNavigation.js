@@ -3,7 +3,8 @@ import { ScrollView } from "react-native";
 import { StackNavigator, DrawerItems, DrawerNavigator } from "react-navigation";
 import {
     ShopKeeperSignup, ShopKeeperLogin, SupplierSignup, SupplierLogin,
-    ShopekeeperDashBoard, SupplierDashBoard, ShopKeeperOrder, OrderList
+    ShopekeeperDashBoard, SupplierDashBoard, ShopKeeperOrder, OrderList,
+    OrderDetails
 }
     from '../components';
 import Home from '../../App';
@@ -81,6 +82,7 @@ const navigation = StackNavigator(
         SupplierLoginScreen: { screen: SupplierLogin },
         SupplierDashBoardScreen: { screen: SupplierDrawNavigator },
         orderListScreen: { screen: OrderList },
+        OrderDetailsScreen: { screen: OrderDetails },
         HomeScreen: { screen: Home },
 
         // EventDetail: { screen: EventDetail },

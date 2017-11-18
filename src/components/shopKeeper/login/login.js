@@ -31,16 +31,21 @@ class ShopKeeperLogin extends Component {
     header: null
   };
 
-  //  componentDidMount() {
-  //   AsyncStorage.getItem('shopkeeper', (err, data) => {
-  //     console.log('dta==', JSON.parse(data))
-  //     let parsedata= JSON.parse(data)
-  //     // console.log("parse",parsedata.isLogin)
-  //     this.setState({
-  //       isLogin:parsedata.isLogin
-  //     })
-  //   })
-  // }
+  componentDidMount() {
+    console.log('didmount runing')
+    const { navigate } = this.props.navigation
+    this.props.isLoggedIn ? navigate('ShopKeeperDashBoardScreen')
+      :
+      null
+    // AsyncStorage.getItem('shopkeeper', (err, data) => {
+    //   console.log('dta==', JSON.parse(data))
+    //   let parsedata= JSON.parse(data)
+    //   // console.log("parse",parsedata.isLogin)
+    //   this.setState({
+    //     isLogin:parsedata.isLogin
+    //   })
+    // })
+  }
 
   _handleLogin() {
     const { navigate } = this.props.navigation
@@ -108,9 +113,9 @@ class ShopKeeperLogin extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  // return {
-  //   isLogin: state
-  // }
+  return {
+    isLogin: state.AuthReducers.isLoggedIn
+  }
 }
 const mapDispatchToProps = (dispatch) => {
   return {

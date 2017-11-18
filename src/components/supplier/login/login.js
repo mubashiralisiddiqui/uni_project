@@ -149,12 +149,6 @@ function mapStateToProps(state) {
     loggedIn: state.AuthReducers.isLoggedIn
   }
 }
-// const mapStateToProps = () => ({
-//   loggedIn: state.isLoggedIn
-// })
-// // const mapDispatchToProps = () => ({
-//   login: (paylaod, navigate) => { dispatch(supplierlogin(paylaod, navigate)) }
-// })
 function mapDispatchToProps(dispatch) {
   return {
     login: (payload, navigate) => { dispatch(supplierLogin(payload, navigate)) }

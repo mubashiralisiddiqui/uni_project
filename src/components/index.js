@@ -6,7 +6,7 @@ import ShopekeeperDashBoard from './shopKeeper/dashboard/dashboard'
 import SupplierDashBoard from './supplier/dashbord/dashbord';
 import ShopKeeperOrder from './shopKeeper/order/order';
 import OrderList from './supplier/orderlist/orderlist'
-
+import OrderDetails from './supplier/orderDetails/orderDetails';
 export {
     ShopKeeperSignup,
     SupplierSignup,
@@ -15,6 +15,7 @@ export {
     ShopekeeperDashBoard,
     SupplierDashBoard,
     ShopKeeperOrder,
-    OrderList
+    OrderList,
+    OrderDetails
 
 }
