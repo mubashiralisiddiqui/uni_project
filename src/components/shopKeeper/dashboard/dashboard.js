@@ -7,6 +7,7 @@ import {
     Text,
     Image,
     Dimensions,
+    ToastAndroid,
     TouchableOpacity,
 } from 'react-native';
 import { Header, Icon, SideMenu, List, ListItem, Button } from "react-native-elements";
@@ -21,7 +22,7 @@ const LONGITUDE = -18.5333;
 
 const LATITUDE_DELTA = 0.01;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-
+import OneSignal from 'react-native-onesignal'
 export default class App extends React.Component {
     constructor(props) {
         super(props)
@@ -37,6 +38,7 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
+
         let currentuser = firebase.auth().currentUser.uid
         firebase.database().ref('shopkeeper/' + currentuser).on('value', (data) => {
             console.log(data.val())
@@ -82,6 +84,15 @@ export default class App extends React.Component {
     static navigationOptions = {
         header: null
     }
+    send(){
+        console.log("send")
+        let data = "hello" // some array as payload
+        let contents = {
+            'en': 'You got notification from user'
+        }
+        playerId="f5fc8ab9-a13b-4e5a-b4ae-a0fed6a5af7a"
+        OneSignal.postNotification(contents, data, playerId);
+    }
 
     render() {
         const { navigate } = this.props.navigation
@@ -109,6 +120,7 @@ export default class App extends React.Component {
                     //  centerComponent={{ text: "Circles " + this.state.circlenum, style: { color: "#fff" } }}
                     outerContainerStyles={{ backgroundColor: "#009688" }}
                 />
+              
                 <MapView
                     ref="map"
                     mapType="terrain"
@@ -123,7 +135,8 @@ export default class App extends React.Component {
                     // onDragEnd={(e) => this.setState({ x: e.nativeEvent.coordinate })}
                     />
                 </MapView>
-
+                <Button title="send" onPress={()=>{this.send()}}/>
+               
             </View>
         );
     }

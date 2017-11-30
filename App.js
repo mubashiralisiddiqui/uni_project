@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {
   Platform,
@@ -16,10 +15,16 @@ import {
   Avatar
 } from "react-native-elements";
 export default class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      count: 0
+    }
+    console.log('constructure running')
+  }
   static navigationOptions = {
     header: null
-
-  }
+  }  
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -43,7 +48,6 @@ export default class App extends Component {
           buttonStyle={styles.SignupButton}
           onPress={() => navigate('SupplierLoginScreen')}
         />
-
       </View>
     );
   }
@@ -54,7 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-   
+
   },
   welcome: {
     fontSize: 20,

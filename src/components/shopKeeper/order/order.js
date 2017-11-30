@@ -6,7 +6,7 @@ import { connect, } from 'react-redux';
 // import { retry } from './C:/Users/Muhammad/AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/async';
 import OrderList from '../../supplier/orderlist/orderlist';
 //  default from '../../../store/reducers/authReducers';
-
+import OneSignal from 'react-native-onesignal';
 class Order extends React.Component {
     constructor(props) {
         super(props);
@@ -56,6 +56,7 @@ class Order extends React.Component {
         firebase.database().ref('order/' + userid).push(obj)
             .then(() => {
                 alert('your request have been submitted successfully')
+                OneSignal.sendTag("key", "value");
             })
     }
     render() {

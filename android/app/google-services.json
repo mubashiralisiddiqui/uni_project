@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "1047912628189",
-    "firebase_url": "https://final-year-project-5e267.firebaseio.com",
-    "project_id": "final-year-project-5e267",
-    "storage_bucket": "final-year-project-5e267.appspot.com"
+    "project_number": "663564521271",
+    "firebase_url": "https://final-year-project-648bc.firebaseio.com",
+    "project_id": "final-year-project-648bc",
+    "storage_bucket": "final-year-project-648bc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1047912628189:android:6c071a3fd04f4833",
+        "mobilesdk_app_id": "1:663564521271:android:af36d4d29a83e04c",
         "android_client_info": {
-          "package_name": "com.fyp"
+          "package_name": "com.testing"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1047912628189-5i04p0cfgap7eui67qnfav4439fmvoqm.apps.googleusercontent.com",
+          "client_id": "663564521271-bqfaatomo604t3bgkmdnam4k0s5anutb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBsB8p8HFC9mtU_VP2pjtNn4-N75-sRI_o"
+          "current_key": "AIzaSyAW5skfzz6iaMUGU7rVo2PBF11fw4tmcBY"
         }
       ],
       "services": {

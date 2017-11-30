@@ -48,7 +48,7 @@ export default class App extends React.Component {
 
     componentDidMount() {
         let currentuser = firebase.auth().currentUser.uid
-        firebase.database().ref('supplier/' + currentuser).on('value', (data) => {
+        firebase.database().ref('users/' + currentuser).on('value', (data) => {
             console.log(data.val())
             let obj = data.val();
             console.log("supplier obj", obj)

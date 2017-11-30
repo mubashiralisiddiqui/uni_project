@@ -17,10 +17,11 @@ export function supplierSignup(obj, navigate) {
                     userId: userId,
                     email: obj.email,
                     name: obj.name,
+                    role: "supplier"
                 };
                 firebase
                     .database()
-                    .ref("supplier/" + userId)
+                    .ref("users/" + userId)
                     .set(userDetails).then(() => {
                         navigate("SupplierLoginScreen");
                         ToastAndroid.show("SIGNUP SUCCESSFUL !", ToastAndroid.SHORT);
@@ -45,10 +46,11 @@ export function shopkeeperSignup(obj, navigate) {
                     userId: userId,
                     email: obj.email,
                     name: obj.name,
+                    role: "shopkeeper"
                 };
                 firebase
                     .database()
-                    .ref("shopkeeper/" + userId)
+                    .ref("users/" + userId)
                     .set(userDetails).then(() => {
                         navigate("ShopKeeperLoginScreen");
                         ToastAndroid.show("SIGNUP SUCCESSFUL !", ToastAndroid.SHORT);
@@ -69,16 +71,21 @@ export const supplierLogin = (obj, navigate) => {
 
         firebase.auth().signInWithEmailAndPassword(obj.email, obj.pasword)
             .then((user) => {
-                dispatch(AuthAction.login_success(user))
-                var userId = firebase.
-                    auth().currentUser.uid;
-                firebase.database().ref('supplier/' + userId).on('value', (data) => {
+                var userId = firebase.auth().currentUser.uid;
+                firebase.database().ref('users/' + userId).on('value', (data) => {
                     var obj = data.val();
-                    console.log('user', obj)
+                    if(obj.role==='supplier'){
+                        dispatch(AuthAction.login_success(user))
+                        navigate('SupplierDashBoardScreen');
+                        ToastAndroid.show('lOGIN SUCCESSFUL !', ToastAndroid.SHORT);
+                    }
+                    else{
+                        ToastAndroid.show('IncorrectInfo !', ToastAndroid.SHORT);
+                    }
+                 
 
                 })
-                navigate('SupplierDashBoardScreen');
-                ToastAndroid.show('lOGIN SUCCESSFUL !', ToastAndroid.SHORT);
+               
             })
             .catch((error) => {
                 var errorMessage = error.message;
@@ -91,17 +98,21 @@ export const shopkeeperlogin = (obj, navigate) => {
         firebase.auth()
             .signInWithEmailAndPassword(obj.email, obj.pasword)
             .then((user) => {
-                console.log('userpata ni ', user)
-
                 var userId = firebase.auth().currentUser.uid;
-                console.log('user id==>', userId)
-                firebase.database().ref('shopkeeper/' + userId).on('value', (data) => {
+                firebase.database().ref('users/' + userId).on('value', (data) => {
                     var obj = data.val();
-                    dispatch(AuthAction.shopkeeperDetail(obj))
-                    console.log('usershpkeepeer', obj)
+                    console.log('usershpkeepeer', obj.role)
+                    if(obj.role==='shopkeeper'){
+                        dispatch(AuthAction.shopkeeperDetail(obj))
+                        navigate('ShopKeeperDashBoardScreen');
+                        ToastAndroid.show("Login SUCCESSFUL !", ToastAndroid.SHORT);
+                    }
+                  else{
+                    ToastAndroid.show("Incorrect Info !", ToastAndroid.SHORT)
+                  }
+                   
                 })
-                navigate('ShopKeeperDashBoardScreen');
-                ToastAndroid.show("Login SUCCESSFUL !", ToastAndroid.SHORT);
+             
             })
             .catch((error) => {
                 var errorMessage = error.message;

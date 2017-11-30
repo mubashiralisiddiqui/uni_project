@@ -6,14 +6,14 @@ import * as firebase from 'firebase'
 import store from './src/store';
 import { Provider } from 'react-redux';
 var config = {
-    apiKey: "AIzaSyC87nZiggXZynKhq4xjbYrTHANE7UEhZEo",
-    authDomain: "final-year-project-5e267.firebaseapp.com",
-    databaseURL: "https://final-year-project-5e267.firebaseio.com",
-    projectId: "final-year-project-5e267",
-    storageBucket: "",
-    messagingSenderId: "1047912628189"
-};
-firebase.initializeApp(config);
+    apiKey: "AIzaSyDaYhRMxMVGYIE-jp16ENy0cAjtHVOTTdw",
+    authDomain: "final-year-project-648bc.firebaseapp.com",
+    databaseURL: "https://final-year-project-648bc.firebaseio.com",
+    projectId: "final-year-project-648bc",
+    storageBucket: "final-year-project-648bc.appspot.com",
+    messagingSenderId: "663564521271"
+  };
+  firebase.initializeApp(config);
 
 
 class App extends React.Component {

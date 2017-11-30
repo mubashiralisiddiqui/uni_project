@@ -88,12 +88,10 @@ class SupplierLogin extends Component {
     const { navigate } = this.props.navigation;
 
     return (
-
       <KeyboardAwareScrollView style={loginStyles.container}>
         <View>
-          {console.log("state",this.props.loggedIn)}
           <Header
-            statusBarProps={{ barStyle: "light-content" }}
+
             leftComponent={
               <Image
                 source={{
@@ -109,8 +107,10 @@ class SupplierLogin extends Component {
             }}
             outerContainerStyles={{ backgroundColor: "#0097A7" }}
           />
+
           <View style={loginStyles.form}>
             <Text style={loginStyles.formHeading}>Login Form</Text>
+
             <View style={loginStyles.formFields}>
               <FormLabel>Email</FormLabel>
               <FormInput
@@ -125,13 +125,13 @@ class SupplierLogin extends Component {
                 onChangeText={txt => this.setState({ password: txt })}
                 value={this.state.password}
               />
+              <Button
+                title="Login"
+                buttonStyle={loginStyles.loginButton}
+                onPress={() => this.login()}
+              />
             </View>
 
-            <Button
-              title="Login"
-              buttonStyle={loginStyles.loginButton}
-              onPress={() => this.login()}
-            />
             <View style={loginStyles.registerSuggestionText}>
               <Text>Not Registered</Text>
               <TouchableOpacity onPress={() => navigate("SupplierSignupScreen")}>
@@ -141,6 +141,7 @@ class SupplierLogin extends Component {
           </View>
         </View>
       </KeyboardAwareScrollView>
+
     );
   }
 }

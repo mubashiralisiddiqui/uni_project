@@ -41,12 +41,13 @@ class ShopKeeperSignup extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
+            <KeyboardAwareScrollView>
             <View>
                 <Header
                     statusBarProps={{ barStyle: "light-content" }}
 
                     centerComponent={{
-                        text: " SALESMAN Signup",
+                        text: " SHOPKEEPER SIGNUP",
                         style: { color: "#fff" }
                     }}
                     outerContainerStyles={{ backgroundColor: "#0097A7" }}
@@ -96,6 +97,7 @@ class ShopKeeperSignup extends React.Component {
                 </View>
 
             </View>
+            </KeyboardAwareScrollView>
         )
     }
 }

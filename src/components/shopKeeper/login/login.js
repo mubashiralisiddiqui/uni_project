@@ -32,7 +32,6 @@ class ShopKeeperLogin extends Component {
   };
 
   componentDidMount() {
-    console.log('didmount runing')
     const { navigate } = this.props.navigation
     this.props.isLoggedIn ? navigate('ShopKeeperDashBoardScreen')
       :
