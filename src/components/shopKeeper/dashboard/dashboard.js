@@ -36,19 +36,14 @@ export default class App extends React.Component {
             },
         };
     }
-
-
-
-
-    componentDidMount() {
-      
+    componentDidMount() {   
         let currentuser = firebase.auth().currentUser.uid
-        firebase.database().ref('shopkeeper/' + currentuser).on('value', (data) => {
+        firebase.database().ref('users/' + currentuser).on('value', (data) => {
             console.log(data.val())
             let obj = data.val();
-            // this.setState({
-            //     username: obj.name
-            // })
+            this.setState({
+                username: obj.name
+            })
         })
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -87,19 +82,6 @@ export default class App extends React.Component {
     static navigationOptions = {
         header: null
     }
-    deciveid(){
-        OneSignal.addEventListener('ids', this.onIds);
-    }
-    send() {
-        console.log("send")
-        let data = "hello" // some array as payload
-        let contents = {
-            'en': 'You got notification from user'
-        }
-        playerId = "f5fc8ab9-a13b-4e5a-b4ae-a0fed6a5af7a"
-        OneSignal.postNotification(contents, data, playerId);
-    }
-
     render() {
         const { navigate } = this.props.navigation
         return (
@@ -120,7 +102,7 @@ export default class App extends React.Component {
                     }
                     centerComponent={
                         <Text style={{ textAlign: 'center', color: 'white' }}>
-                            {/* {this.state.username} */}
+                            {this.state.username}
                         </Text>
                     }
                     //  centerComponent={{ text: "Circles " + this.state.circlenum, style: { color: "#fff" } }}
@@ -141,9 +123,6 @@ export default class App extends React.Component {
                     // onDragEnd={(e) => this.setState({ x: e.nativeEvent.coordinate })}
                     />
                 </MapView>
-                <Button title="send" onPress={() => { this.send() }} />
-                <Button title="device" onPress={() => { this.deciveid() }} />
-
             </View>
         );
     }

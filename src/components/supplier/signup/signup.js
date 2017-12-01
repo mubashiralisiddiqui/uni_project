@@ -34,6 +34,7 @@ class SupplierSignup extends React.Component {
             name: this.state.firstName + this.state.lastName,
             email: this.state.email,
             pasword: this.state.password,
+            deviceid:this.props.deviceID
         }
         this.props.signup(obj, navigate)
 
@@ -98,13 +99,12 @@ class SupplierSignup extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-
+        deviceID: state.deviceIDReducer.deviceID
     }
-
 }
 const mapDispatchToProps = (dispatch) => {
     return {
         signup: (payload, navigate) => { dispatch(supplierSignup(payload, navigate)) }
     }
 }
-export default connect(null, mapDispatchToProps)(SupplierSignup)
+export default connect(mapStateToProps, mapDispatchToProps)(SupplierSignup)

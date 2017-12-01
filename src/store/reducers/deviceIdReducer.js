@@ -1,14 +1,15 @@
 
-import { DeviceId } from '../actions/deviceIdAction'
+import { DeviceIdAction } from '../actions/deviceIdAction'
 const initalState = {
     deviceID: ''
 }
 
 const deviceIDReducer = (state = initalState, action) => {
+    console.log("idreducer",action.payload)
     switch (action.type) {
-        case DeviceId.GETDEVICEID: {
+        case DeviceIdAction.GETDEVICEID: {
             return {
-                ...state, DeviceId: action.payload
+                ...state, deviceID: action.payload
             }
         }
         default: {

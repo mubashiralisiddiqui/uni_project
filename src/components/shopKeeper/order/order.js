@@ -34,10 +34,10 @@ class Order extends React.Component {
     }
 
     onOpened(openResult) {
-      console.log('Message: ', openResult.notification.payload.body);
-      console.log('Data: ', openResult.notification.payload.additionalData);
-      console.log('isActive: ', openResult.notification.isAppInFocus);
-      console.log('openResult: ', openResult);
+        console.log('Message: ', openResult.notification.payload.body);
+        console.log('Data: ', openResult.notification.payload.additionalData);
+        console.log('isActive: ', openResult.notification.isAppInFocus);
+        console.log('openResult: ', openResult);
     }
 
     onRegistered(notifData) {
@@ -68,6 +68,15 @@ class Order extends React.Component {
             items: this.state.items ? this.state.items : []
         })
     }
+    send() {
+        console.log("send")
+        let data = "hellomvhvhvhg" // some array as payload
+        let contents = {
+            'en': 'You got notification from user'
+        }
+        playerId = "f5fc8ab9-a13b-4e5a-b4ae-a0fed6a5af7a"
+        OneSignal.postNotification(contents, data, playerId);
+    }
     submitItem() {
         const userid = firebase.auth().currentUser.uid;
         let date = new Date();
@@ -88,7 +97,12 @@ class Order extends React.Component {
         firebase.database().ref('order/' + userid).push(obj)
             .then(() => {
                 alert('your request have been submitted successfully')
-                OneSignal.sendTag("key", "value");
+                let data = "hellomvhvhvhg" // some array as payload
+                let contents = {
+                    'en': 'You got notification from user'
+                }
+                playerId = "f5fc8ab9-a13b-4e5a-b4ae-a0fed6a5af7a"
+                OneSignal.postNotification(contents, data, playerId);
             })
     }
     render() {

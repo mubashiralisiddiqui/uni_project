@@ -1,13 +1,13 @@
 
 
 
-export class DeviceId {
+export class DeviceIdAction {
 
     static GETDEVICEID = 'GETDEVICEID';
 
-    static getdeviceid = (payload) => {
-        type: DeviceId.GETDEVICEID,
-            payload
-    }
+    static getdeviceid = (payload) => ({
+        type: DeviceIdAction.GETDEVICEID,
+        payload
+    })
 
 }

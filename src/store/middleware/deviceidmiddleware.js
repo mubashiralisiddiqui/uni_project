@@ -1,10 +1,10 @@
-import {DeviceId} from '../actions/deviceIdAction';
+import {DeviceIdAction} from '../actions/deviceIdAction';
 import * as firebase from 'firebase';
 
 
 export const deviceIDMiddlware=(deviceid)=>{
-    console.log("middlewareid",deviceid)
-    // return dispatch=>{
-    //     // dispatch(DeviceId.getdeviceid(deviceid))
-    // }
+    console.log("action",deviceid)
+    return dispatch=>{
+        dispatch(DeviceIdAction.getdeviceid(deviceid))
+    }
 }

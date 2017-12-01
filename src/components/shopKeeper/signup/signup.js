@@ -29,24 +29,14 @@ class ShopKeeperSignup extends React.Component {
     static navigationOptions = {
         header: null
     }
-    componentWillMount() {
-        
-           OneSignal.addEventListener('ids', this.onIds);
-       }
-   
-       componentWillUnmount() {
-           
-           OneSignal.removeEventListener('ids', this.onIds);
-       }
-       onIds(device) {
-           console.log('Device info: ', device);
-       }
+
     signup() {
         const { navigate } = this.props.navigation
         let obj = {
             name: this.state.firstName + this.state.lastName,
             email: this.state.email,
             pasword: this.state.password,
+            deviceid:this.props.deviceID
         }
         this.props.signup(obj, navigate)
     }
@@ -55,68 +45,69 @@ class ShopKeeperSignup extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAwareScrollView>
-            <View>
-                <Header
-                    statusBarProps={{ barStyle: "light-content" }}
+                {console.log("state of deviceid==>",this.props.deviceID)}
+                <View>
+                    <Header
+                        statusBarProps={{ barStyle: "light-content" }}
 
-                    centerComponent={{
-                        text: " SHOPKEEPER SIGNUP",
-                        style: { color: "#fff" }
-                    }}
-                    outerContainerStyles={{ backgroundColor: "#0097A7" }}
-                />
-                <View style={signupStyles.form}>
-                    <Text style={signupStyles.formHeading}>Signup Form</Text>
-                    <View style={signupStyles.formFields}>
-                        <View>
-                            <FormLabel>First Name</FormLabel>
-                            <FormInput
-                                onChangeText={txt => this.setState({ firstName: txt })}
-                                value={this.state.firstName}
-                            />
+                        centerComponent={{
+                            text: " SHOPKEEPER SIGNUP",
+                            style: { color: "#fff" }
+                        }}
+                        outerContainerStyles={{ backgroundColor: "#0097A7" }}
+                    />
+                    <View style={signupStyles.form}>
+                        <Text style={signupStyles.formHeading}>Signup Form</Text>
+                        <View style={signupStyles.formFields}>
+                            <View>
+                                <FormLabel>First Name</FormLabel>
+                                <FormInput
+                                    onChangeText={txt => this.setState({ firstName: txt })}
+                                    value={this.state.firstName}
+                                />
 
-                            <FormLabel>Last Name</FormLabel>
-                            <FormInput
-                                onChangeText={txt => this.setState({ lastName: txt })}
-                                value={this.state.lastName}
-                            />
+                                <FormLabel>Last Name</FormLabel>
+                                <FormInput
+                                    onChangeText={txt => this.setState({ lastName: txt })}
+                                    value={this.state.lastName}
+                                />
 
-                            <FormLabel>Email</FormLabel>
-                            <FormInput
-                                keyboardType="email-address"
-                                value={this.state.email}
-                                onChangeText={txt => this.setState({ email: txt })}
-                            />
+                                <FormLabel>Email</FormLabel>
+                                <FormInput
+                                    keyboardType="email-address"
+                                    value={this.state.email}
+                                    onChangeText={txt => this.setState({ email: txt })}
+                                />
 
-                            <FormLabel>Password</FormLabel>
-                            <FormInput
-                                secureTextEntry={true}
-                                value={this.state.password}
-                                onChangeText={txt => this.setState({ password: txt })}
+                                <FormLabel>Password</FormLabel>
+                                <FormInput
+                                    secureTextEntry={true}
+                                    value={this.state.password}
+                                    onChangeText={txt => this.setState({ password: txt })}
+                                />
+                            </View>
+                            <Button
+                                title="Sign up"
+                                buttonStyle={signupStyles.SignupButton}
+                                onPress={() => this.signup()}
                             />
                         </View>
-                        <Button
-                            title="Sign up"
-                            buttonStyle={signupStyles.SignupButton}
-                            onPress={() => this.signup()}
-                        />
+                        <View style={signupStyles.registerSuggestionText}>
+                            <Text>Already have an account ?</Text>
+                            <TouchableOpacity onPress={() => navigate("ShopKeeperLoginScreen")}>
+                                <Text style={{ fontWeight: "bold" }}>Login Now!</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={signupStyles.registerSuggestionText}>
-                        <Text>Already have an account ?</Text>
-                        <TouchableOpacity onPress={() => navigate("ShopKeeperLoginScreen")}>
-                            <Text style={{ fontWeight: "bold" }}>Login Now!</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
 
-            </View>
+                </View>
             </KeyboardAwareScrollView>
         )
     }
 }
 const mapStateToProps = (state) => {
     return {
-
+        deviceID: state.deviceIDReducer.deviceID
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -124,4 +115,4 @@ const mapDispatchToProps = (dispatch) => {
         signup: (payload, navigate) => { dispatch(shopkeeperSignup(payload, navigate)) }
     }
 }
-export default connect(null, mapDispatchToProps)(ShopKeeperSignup);
+export default connect(mapStateToProps, mapDispatchToProps)(ShopKeeperSignup);

@@ -22,8 +22,11 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      count: 0
+      count: 0,
+      deviceid: ''
+
     }
+    this.onIds=this.onIds.bind(this)
     console.log('constructure running')
   } componentWillMount() {
 
@@ -35,10 +38,11 @@ class App extends Component {
     OneSignal.removeEventListener('ids', this.onIds);
   }
   onIds(device) {
-   
-    const id= device.userId
+
+    const id = device.userId
     console.log('Device info: ', id);
-  // console.log(this.props.device())
+   this.props.decviceinfo(id)
+   
   }
 
   static navigationOptions = {
@@ -48,6 +52,7 @@ class App extends Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
+        {console.log(this.state.count)}
         <Header
           statusBarProps={{ barStyle: "light-content" }}
           centerComponent={{
@@ -96,7 +101,7 @@ const styles = StyleSheet.create({
 });
 const mapDispatchToProps = (dispatch) => {
   return {
-    device: (payload) => { dispatch(deviceIDMiddlware(payload)) }
+    decviceinfo: (payload) => { dispatch(deviceIDMiddlware(payload)) }
   }
 }
 

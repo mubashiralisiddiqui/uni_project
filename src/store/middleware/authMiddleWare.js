@@ -6,6 +6,7 @@ import { AuthAction } from '../actions/authAction'
 
 
 export function supplierSignup(obj, navigate) {
+    console.log(obj.deviceid)
     console.log('obj', obj)
     return dispatch => {
         firebase
@@ -14,10 +15,12 @@ export function supplierSignup(obj, navigate) {
             .then(user => {
                 var userId = firebase.auth().currentUser.uid;
                 let userDetails = {
+                    deviceId:obj.deviceid,
                     userId: userId,
                     email: obj.email,
                     name: obj.name,
-                    role: "supplier"
+                    role: "supplier",
+                
                 };
                 firebase
                     .database()
@@ -46,6 +49,7 @@ export function shopkeeperSignup(obj, navigate) {
                     userId: userId,
                     email: obj.email,
                     name: obj.name,
+                    deviceId:obj.deviceid,
                     role: "shopkeeper"
                 };
                 firebase
