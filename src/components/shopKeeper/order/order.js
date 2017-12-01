@@ -16,6 +16,20 @@ class Order extends React.Component {
             items: [],
         }
     }
+    componentDidMount() {
+        firebase.database().ref('users/').on('value', (data => {
+              console.log("users==>",data.val())
+              const obj = data.val();
+              const array=[];
+              for(var prop in obj){
+                array.push(obj[prop])
+                console.log("array=>",array)
+              }
+              array.map((a,i)=>{
+                  console.log('mapdata',a.deviceId)
+              })
+        }))
+    }
     componentWillMount() {
         console.log('willmount runnign')
         OneSignal.addEventListener('received', this.onReceived);
@@ -101,8 +115,8 @@ class Order extends React.Component {
                 let contents = {
                     'en': 'You got notification from user'
                 }
-                playerId = "f5fc8ab9-a13b-4e5a-b4ae-a0fed6a5af7a"
-                OneSignal.postNotification(contents, data, playerId);
+                playerId = this.props.deviceID
+                OneSignal.postNotification(contents, data);
             })
     }
     render() {
@@ -183,7 +197,8 @@ var styles = StyleSheet.create({
 });
 const mapStateToProps = (state) => {
     return {
-        userdetail: state.sk_detailReducer.sk_detail
+        userdetail: state.sk_detailReducer.sk_detail,
+        deviceID: state.deviceIDReducer.deviceID
     }
 }
 export default connect(mapStateToProps, null)(Order)

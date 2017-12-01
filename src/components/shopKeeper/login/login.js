@@ -50,7 +50,8 @@ class ShopKeeperLogin extends Component {
     const { navigate } = this.props.navigation
     let obj = {
       email: this.state.email,
-      pasword: this.state.password
+      pasword: this.state.password,
+      id:this.props.deviceID
     }
     this.props.login(obj, navigate)
   }
@@ -58,6 +59,7 @@ class ShopKeeperLogin extends Component {
     const { navigate } = this.props.navigation;
     return (
       <KeyboardAwareScrollView style={loginStyles.container}>
+      {console.log("statteeeeeeee",this.props.deviceID)}
         <View>
           <Header
             statusBarProps={{ barStyle: "light-content" }}
@@ -113,7 +115,8 @@ class ShopKeeperLogin extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    isLogin: state.AuthReducers.isLoggedIn
+    isLogin: state.AuthReducers.isLoggedIn,
+    deviceID: state.deviceIDReducer.deviceID
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -121,4 +124,4 @@ const mapDispatchToProps = (dispatch) => {
     login: (payload, navigate) => { dispatch(shopkeeperlogin(payload, navigate)) }
   }
 }
-export default connect(null, mapDispatchToProps)(ShopKeeperLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(ShopKeeperLogin);

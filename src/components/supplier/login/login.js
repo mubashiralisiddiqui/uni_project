@@ -15,7 +15,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 import { supplierLogin } from '../../../store/middleware/authMiddleWare';
+
 const Accounts = [];
+
 class SupplierLogin extends Component {
   constructor() {
     super();
@@ -53,35 +55,11 @@ class SupplierLogin extends Component {
     const { navigate } = this.props.navigation
     let obj = {
       email: this.state.email,
-      pasword: this.state.password
+      pasword: this.state.password,
+      id:this.props.deviceID
     }
     console.log(this.props.login)
     this.props.login(obj, navigate)
-  }
-
-  _handleLogin() {
-    const { navigate } = this.props.navigation
-    let obj = {
-      email: this.state.email,
-      pasword: this.state.password
-    }
-    firebase.auth()
-      .signInWithEmailAndPassword(obj.email, obj.pasword)
-      .then((user) => {
-        var userId = firebase.
-          auth().currentUser.uid;
-        firebase.database().ref('users/' + userId).on('value', (data) => {
-          var obj = data.val();
-          console.log('user', obj)
-          this.setState({ isLogin: true })
-        })
-        navigate('SupplierDashBoardScreen');
-        ToastAndroid.show('lOGIN SUCCESSFUL !', ToastAndroid.SHORT);
-      })
-      .catch((error) => {
-        var errorMessage = error.message;
-        alert(errorMessage);
-      });
   }
 
   render() {
@@ -147,7 +125,8 @@ class SupplierLogin extends Component {
 }
 function mapStateToProps(state) {
   return {
-    loggedIn: state.AuthReducers.isLoggedIn
+    loggedIn: state.AuthReducers.isLoggedIn,
+    deviceID: state.deviceIDReducer.deviceID
   }
 }
 function mapDispatchToProps(dispatch) {
