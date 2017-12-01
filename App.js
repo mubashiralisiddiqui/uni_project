@@ -14,17 +14,36 @@ import {
   Icon,
   Avatar
 } from "react-native-elements";
-export default class App extends Component {
+import OneSignal from 'react-native-onesignal';
+import { connect } from 'react-redux';
+import { deviceIDMiddlware } from './src/store/middleware/deviceidmiddleware';
+
+class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       count: 0
     }
     console.log('constructure running')
+  } componentWillMount() {
+
+    OneSignal.addEventListener('ids', this.onIds);
   }
+
+  componentWillUnmount() {
+
+    OneSignal.removeEventListener('ids', this.onIds);
+  }
+  onIds(device) {
+   
+    const id= device.userId
+    console.log('Device info: ', id);
+  // console.log(this.props.device())
+  }
+
   static navigationOptions = {
     header: null
-  }  
+  }
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -75,3 +94,10 @@ const styles = StyleSheet.create({
     marginTop: 25
   }
 });
+const mapDispatchToProps = (dispatch) => {
+  return {
+    device: (payload) => { dispatch(deviceIDMiddlware(payload)) }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App)

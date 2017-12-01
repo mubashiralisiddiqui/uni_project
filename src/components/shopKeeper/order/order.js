@@ -16,6 +16,38 @@ class Order extends React.Component {
             items: [],
         }
     }
+    componentWillMount() {
+        console.log('willmount runnign')
+        OneSignal.addEventListener('received', this.onReceived);
+        OneSignal.addEventListener('opened', this.onOpened);
+        OneSignal.addEventListener('registered', this.onRegistered);
+        OneSignal.addEventListener('ids', this.onIds);
+    }
+    componentWillUnmount() {
+        OneSignal.removeEventListener('received', this.onReceived);
+        OneSignal.removeEventListener('opened', this.onOpened);
+        OneSignal.removeEventListener('registered', this.onRegistered);
+        OneSignal.removeEventListener('ids', this.onIds);
+    }
+    onReceived(notification) {
+        console.log("Notification received: ", notification);
+    }
+
+    onOpened(openResult) {
+      console.log('Message: ', openResult.notification.payload.body);
+      console.log('Data: ', openResult.notification.payload.additionalData);
+      console.log('isActive: ', openResult.notification.isAppInFocus);
+      console.log('openResult: ', openResult);
+    }
+
+    onRegistered(notifData) {
+        console.log("Device had been registered for push notifications!", notifData);
+    }
+
+    onIds(device) {
+        console.log('Device info: ', device);
+        OneSignal.addEventListener('ids', this.onIds);
+    }
     addItem() {
         if (this.state.text.length < 1) {
             alert('please add some items')

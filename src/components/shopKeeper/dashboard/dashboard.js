@@ -37,8 +37,11 @@ export default class App extends React.Component {
         };
     }
 
-    componentDidMount() {
 
+
+
+    componentDidMount() {
+      
         let currentuser = firebase.auth().currentUser.uid
         firebase.database().ref('shopkeeper/' + currentuser).on('value', (data) => {
             console.log(data.val())
@@ -77,20 +80,23 @@ export default class App extends React.Component {
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
     }
-
+    
     onRegionChange(region) {
         this.setState({ region });
     }
     static navigationOptions = {
         header: null
     }
-    send(){
+    deciveid(){
+        OneSignal.addEventListener('ids', this.onIds);
+    }
+    send() {
         console.log("send")
         let data = "hello" // some array as payload
         let contents = {
             'en': 'You got notification from user'
         }
-        playerId="f5fc8ab9-a13b-4e5a-b4ae-a0fed6a5af7a"
+        playerId = "f5fc8ab9-a13b-4e5a-b4ae-a0fed6a5af7a"
         OneSignal.postNotification(contents, data, playerId);
     }
 
@@ -120,7 +126,7 @@ export default class App extends React.Component {
                     //  centerComponent={{ text: "Circles " + this.state.circlenum, style: { color: "#fff" } }}
                     outerContainerStyles={{ backgroundColor: "#009688" }}
                 />
-              
+
                 <MapView
                     ref="map"
                     mapType="terrain"
@@ -135,8 +141,9 @@ export default class App extends React.Component {
                     // onDragEnd={(e) => this.setState({ x: e.nativeEvent.coordinate })}
                     />
                 </MapView>
-                <Button title="send" onPress={()=>{this.send()}}/>
-               
+                <Button title="send" onPress={() => { this.send() }} />
+                <Button title="device" onPress={() => { this.deciveid() }} />
+
             </View>
         );
     }

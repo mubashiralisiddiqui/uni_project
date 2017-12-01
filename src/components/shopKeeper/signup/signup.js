@@ -15,6 +15,7 @@ import styles from './style'
 import { signupStyles } from "./style";
 import { shopkeeperSignup } from '../../../store/middleware/authMiddleWare';
 // import default from '../../supplier/signup/signup';
+import OneSignal from 'react-native-onesignal'
 class ShopKeeperSignup extends React.Component {
     constructor(props) {
         super(props);
@@ -28,6 +29,18 @@ class ShopKeeperSignup extends React.Component {
     static navigationOptions = {
         header: null
     }
+    componentWillMount() {
+        
+           OneSignal.addEventListener('ids', this.onIds);
+       }
+   
+       componentWillUnmount() {
+           
+           OneSignal.removeEventListener('ids', this.onIds);
+       }
+       onIds(device) {
+           console.log('Device info: ', device);
+       }
     signup() {
         const { navigate } = this.props.navigation
         let obj = {
