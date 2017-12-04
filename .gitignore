@@ -35,6 +35,7 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+my_private_key.keystore
 
 # BUCK
 buck-out/

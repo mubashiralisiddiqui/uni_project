@@ -18,16 +18,16 @@ class Order extends React.Component {
     }
     componentDidMount() {
         firebase.database().ref('users/').on('value', (data => {
-              console.log("users==>",data.val())
-              const obj = data.val();
-              const array=[];
-              for(var prop in obj){
+            console.log("users==>", data.val())
+            const obj = data.val();
+            const array = [];
+            for (var prop in obj) {
                 array.push(obj[prop])
-                console.log("array=>",array)
-              }
-              array.map((a,i)=>{
-                  console.log('mapdata',a.deviceId)
-              })
+                console.log("array=>", array)
+            }
+            array.map((a, i) => {
+                console.log('mapdata', a.deviceId)
+            })
         }))
     }
     componentWillMount() {
@@ -111,12 +111,13 @@ class Order extends React.Component {
         firebase.database().ref('order/' + userid).push(obj)
             .then(() => {
                 alert('your request have been submitted successfully')
-                let data = "hellomvhvhvhg" // some array as payload
+                let data = { abc: 'hello hy' } // some array as payload
                 let contents = {
                     'en': 'You got notification from user'
                 }
-                playerId = this.props.deviceID
-                OneSignal.postNotification(contents, data);
+                let url = "https://documentation.onesignal.com/reference#section-attachments"
+                playerId = "3bb383e7-f333-47a8-8f1e-bf8c73fb2d20"
+                OneSignal.postNotification(contents, data, playerId);
             })
     }
     render() {

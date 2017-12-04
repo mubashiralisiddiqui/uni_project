@@ -107,7 +107,7 @@ export const shopkeeperlogin = (obj, navigate) => {
                     console.log('usershpkeepeer', obj.role)
                     if (obj.role === 'shopkeeper') {
                         dispatch(AuthAction.shopkeeperDetail(obj))
-                        // navigate('ShopKeeperDashBoardScreen');
+                        navigate('ShopKeeperDashBoardScreen');
                         ToastAndroid.show("Login SUCCESSFUL !", ToastAndroid.SHORT);
                     }
                     else {

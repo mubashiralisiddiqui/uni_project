@@ -26,9 +26,42 @@ class App extends Component {
       deviceid: ''
 
     }
-    this.onIds=this.onIds.bind(this)
+    this.onIds = this.onIds.bind(this)
     console.log('constructure running')
-  } componentWillMount() {
+  }
+  componentDidMount() {
+    OneSignal.configure({
+      onIdsAvailable:  (device)=> {
+        console.log('UserId = ', device.userId);
+        console.log('PushToken = ', device.pushToken);
+      },
+      onNotificationReceived:  (notification)=> {
+        console.log('MESSAGE RECEIVED: ', notification["notification"]["notificationID"]);
+      },
+      onNotificationOpened:(openResult)=> {
+        console.log('MESSAGE: ', openResult["notification"]["payload"]["body"]);
+        console.log('DATA: ', openResult["notification"]["payload"]["additionalData"]);
+        console.log('ISACTIVE: ', openResult["notification"]["isAppInFocus"]);
+
+      }
+    });
+  }
+
+
+
+
+  handleNotification(message, data, isActive) {
+    console.log(message, data, isActive)
+    if (isActive) {
+      // TODO: Toast Notification
+      alert("active")
+
+    } else {
+      // TODO: Go to the room
+      console.log('not active')
+    }
+  }
+  componentWillMount() {
 
     OneSignal.addEventListener('ids', this.onIds);
   }
@@ -41,8 +74,8 @@ class App extends Component {
 
     const id = device.userId
     console.log('Device info: ', id);
-   this.props.decviceinfo(id)
-   
+    this.props.decviceinfo(id)
+
   }
 
   static navigationOptions = {
