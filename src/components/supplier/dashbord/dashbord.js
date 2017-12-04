@@ -14,7 +14,7 @@ import MapView from 'react-native-maps';
 import * as firebase from 'firebase'
 var { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
-
+import OneSignal from 'react-native-onesignal'
 // (Initial Static Location) Mumbai
 const LATITUDE = 65.9667;
 const LONGITUDE = -18.5333;
@@ -45,7 +45,37 @@ export default class App extends React.Component {
             // })
         })
     }
+    componentWillMount() {
+        console.log('willmount runnign')
+        OneSignal.addEventListener('received', this.onReceived);
+        OneSignal.addEventListener('opened', this.onOpened);
+        OneSignal.addEventListener('registered', this.onRegistered);
+        OneSignal.addEventListener('ids', this.onIds);
+    }
+    componentWillUnmount() {
+        OneSignal.removeEventListener('received', this.onReceived);
+        OneSignal.removeEventListener('opened', this.onOpened);
+        OneSignal.removeEventListener('registered', this.onRegistered);
+        OneSignal.removeEventListener('ids', this.onIds);
+    }
+    onReceived(notification) {
+        console.log("Notification received: ", notification);
+    }
+    onOpened(openResult) {
+        console.log('Messageby me: ', openResult.notification.payload.body);
+        console.log('Data: ', openResult.notification.payload.additionalData);
+        console.log('isActive: ', openResult.notification.isAppInFocus);
+        console.log('openResult: ', openResult);
+    }
 
+    onRegistered(notifData) {
+        console.log("Device had been registered for push notifications!", notifData);
+    }
+
+    onIds(device) {
+        console.log('Device info: ', device);
+        OneSignal.addEventListener('ids', this.onIds);
+    }
     componentDidMount() {
         let currentuser = firebase.auth().currentUser.uid
         firebase.database().ref('users/' + currentuser).on('value', (data) => {

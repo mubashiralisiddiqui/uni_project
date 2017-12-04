@@ -7,6 +7,7 @@ import { connect, } from 'react-redux';
 import OrderList from '../../supplier/orderlist/orderlist';
 //  default from '../../../store/reducers/authReducers';
 import OneSignal from 'react-native-onesignal';
+
 class Order extends React.Component {
     constructor(props) {
         super(props);
@@ -27,6 +28,13 @@ class Order extends React.Component {
             }
             array.map((a, i) => {
                 console.log('mapdata', a.deviceId)
+                let data = { abc: 'hello hy' } // some array as payload
+                let contents = {
+                    'en': 'You got notification from user'
+                }
+                let url = "https://documentation.onesignal.com/reference#section-attachments"
+                playerId = a.deviceId
+                OneSignal.postNotification(contents, data, playerId);
             })
         }))
     }
@@ -48,7 +56,10 @@ class Order extends React.Component {
     }
 
     onOpened(openResult) {
-        console.log('Message: ', openResult.notification.payload.body);
+        // const { navigate } = this.props.navigation;
+        // navigate("DrawerOpen");
+          this.routechange() 
+        console.log('Messageby me==: ', openResult.notification.payload.body);
         console.log('Data: ', openResult.notification.payload.additionalData);
         console.log('isActive: ', openResult.notification.isAppInFocus);
         console.log('openResult: ', openResult);
@@ -81,6 +92,11 @@ class Order extends React.Component {
         this.setState({
             items: this.state.items ? this.state.items : []
         })
+    }
+    routechange() {
+        alert('routechange')
+        const { navigate } = this.props.navigation;
+        navigate('ShopKeeperDashBoardScreen')
     }
     send() {
         console.log("send")
@@ -124,6 +140,7 @@ class Order extends React.Component {
         const { navigate } = this.props.navigation
         return (
             <View style={styles.container} >
+                {console.log("agai sub ki id", this.props.AlldeviceID)}
                 <Header
                     leftComponent={
                         <Icon
@@ -199,7 +216,8 @@ var styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         userdetail: state.sk_detailReducer.sk_detail,
-        deviceID: state.deviceIDReducer.deviceID
+        deviceID: state.deviceIDReducer.deviceID,
+        AlldeviceID: state.deviceIDReducer.AlluserIDs
     }
 }
 export default connect(mapStateToProps, null)(Order)
