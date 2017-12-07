@@ -4,33 +4,33 @@ import { StackNavigator, DrawerItems, DrawerNavigator } from "react-navigation";
 import {
     ShopKeeperSignup, ShopKeeperLogin, SupplierSignup, SupplierLogin,
     ShopekeeperDashBoard, SupplierDashBoard, ShopKeeperOrder, OrderList,
-    OrderDetails
+    OrderDetails, SupplierList, SupplierDetails
 }
     from '../components';
 import Home from '../../App';
 
 const ShopKeeperdrawNavigator = DrawerNavigator(
     {
-        //   MyProfile: { screen: Profile },
-
         DashBoard: { screen: ShopekeeperDashBoard },
         Logout: { screen: ShopKeeperLogin },
         Order: { screen: ShopKeeperOrder },
+        suppliers: { screen: SupplierList },
+
     },
     {
         contentComponent: props => {
             return (
                 <ScrollView>
-                    <DrawerItems {...props} key={props} />
+                    <DrawerItems {...props} key={props} style={{ color: 'red' }} />
                 </ScrollView>
             );
         },
         contentOptions: {
             drawerWidth: '50px',
-            activeTintColor: "black",
+            activeTintColor: "#339cc9",
             style: {
                 flex: 1,
-                paddingTop: 15
+                paddingTop: 15,
             }
         }
     }
@@ -56,10 +56,11 @@ const SupplierDrawNavigator = DrawerNavigator(
         },
         contentOptions: {
             drawerWidth: '50px',
-            activeTintColor: "black",
+            activeTintColor: "#339cc9",
             style: {
                 flex: 1,
-                paddingTop: 15
+                paddingTop: 15,
+                color: '#339cc9'
             }
         }
     }
@@ -76,7 +77,7 @@ const navigation = StackNavigator(
         ShopKeeperSignupScreen: { screen: ShopKeeperSignup },
         ShopKeeperLoginScreen: { screen: ShopKeeperLogin },
         ShopKeeperDashBoardScreen: { screen: ShopKeeperdrawNavigator },
-
+        SupplierDetailsScreen: { screen: SupplierDetails },
 
         SupplierSignupScreen: { screen: SupplierSignup },
         SupplierLoginScreen: { screen: SupplierLogin },
@@ -84,11 +85,6 @@ const navigation = StackNavigator(
         orderListScreen: { screen: OrderList },
         OrderDetailsScreen: { screen: OrderDetails },
         HomeScreen: { screen: Home },
-
-        // EventDetail: { screen: EventDetail },
-        // AddEvent: { screen: AddEvent },
-        // Profile: { screen: Profile },
-        // SupplierDashBoardScreen: { screen: drawNavigator }
     },
     {
         headerMode: "screen",

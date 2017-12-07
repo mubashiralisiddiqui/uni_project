@@ -22,7 +22,8 @@ class SupplierSignup extends React.Component {
             firstName: '',
             lastName: '',
             password: '',
-            email: ''
+            email: '',
+            contact: 0
         }
     }
     static navigationOptions = {
@@ -34,7 +35,8 @@ class SupplierSignup extends React.Component {
             name: this.state.firstName + this.state.lastName,
             email: this.state.email,
             pasword: this.state.password,
-            deviceid:this.props.deviceID
+            deviceid: this.props.deviceID,
+            contact: this.state.contact
         }
         this.props.signup(obj, navigate)
 
@@ -71,6 +73,12 @@ class SupplierSignup extends React.Component {
                                     keyboardType="email-address"
                                     value={this.state.email}
                                     onChangeText={txt => this.setState({ email: txt })}
+                                />
+                                <FormLabel>Contact #</FormLabel>
+                                <FormInput
+                                    keyboardType="email-address"
+                                    value={this.state.contact}
+                                    onChangeText={txt => this.setState({ contact: txt })}
                                 />
                                 <FormLabel>Password</FormLabel>
                                 <FormInput

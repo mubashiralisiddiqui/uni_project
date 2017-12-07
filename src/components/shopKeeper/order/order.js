@@ -58,7 +58,7 @@ class Order extends React.Component {
     onOpened(openResult) {
         // const { navigate } = this.props.navigation;
         // navigate("DrawerOpen");
-          this.routechange() 
+        //   this.routechange() 
         console.log('Messageby me==: ', openResult.notification.payload.body);
         console.log('Data: ', openResult.notification.payload.additionalData);
         console.log('isActive: ', openResult.notification.isAppInFocus);

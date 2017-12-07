@@ -17,7 +17,7 @@ export const signupStyles = {
         fontSize: 18,
         paddingBottom: 4,
         color: "#3E2723",
-        marginTop: 30
+        marginTop: 20
     },
     SignupButton: {
         backgroundColor: '#0097A7',

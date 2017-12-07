@@ -31,14 +31,14 @@ class App extends Component {
   }
   componentDidMount() {
     OneSignal.configure({
-      onIdsAvailable:  (device)=> {
+      onIdsAvailable: (device) => {
         console.log('UserId = ', device.userId);
         console.log('PushToken = ', device.pushToken);
       },
-      onNotificationReceived:  (notification)=> {
+      onNotificationReceived: (notification) => {
         console.log('MESSAGE RECEIVED: ', notification["notification"]["notificationID"]);
       },
-      onNotificationOpened:(openResult)=> {
+      onNotificationOpened: (openResult) => {
         console.log('MESSAGE: ', openResult["notification"]["payload"]["body"]);
         console.log('DATA: ', openResult["notification"]["payload"]["additionalData"]);
         console.log('ISACTIVE: ', openResult["notification"]["isAppInFocus"]);
@@ -85,16 +85,11 @@ class App extends Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        {console.log(this.state.count)}
         <Header
-          statusBarProps={{ barStyle: "light-content" }}
-          centerComponent={{
-            text: "Welcome To SAlESMAN & SHOP KEEPER APP",
-            style: { color: "#fff" }
-          }}
+          centerComponent={{ text: 'Welcome To E Supply App', style: { color: '#fff',fontStyle:"italic",fontSize:25 } }}
           outerContainerStyles={{ backgroundColor: "#0288D1" }}
         />
-        <Image source={require('./logo.jpg')} />
+        <Image source={require('./appLogo.png')} style={{ width: 200, height: 200, borderRadius: 100 }} />
         <Button
           title="Login As ShopKeeper "
           buttonStyle={styles.SignupButton}
@@ -122,14 +117,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
   SignupButton: {
     backgroundColor: '#0288D1',
-    marginTop: 25
+    marginTop: 25,
+    borderRadius: 50,
+    // width: 50,
+    // height: 100
+
   }
 });
 const mapDispatchToProps = (dispatch) => {

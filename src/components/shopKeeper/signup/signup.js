@@ -23,7 +23,8 @@ class ShopKeeperSignup extends React.Component {
             firstName: '',
             lastName: '',
             password: '',
-            email: ''
+            email: '',
+            contact:0
         }
     }
     static navigationOptions = {
@@ -36,7 +37,8 @@ class ShopKeeperSignup extends React.Component {
             name: this.state.firstName + this.state.lastName,
             email: this.state.email,
             pasword: this.state.password,
-            deviceid:this.props.deviceID
+            deviceid: this.props.deviceID,
+            contact:this.state.contact
         }
         this.props.signup(obj, navigate)
     }
@@ -45,7 +47,7 @@ class ShopKeeperSignup extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAwareScrollView>
-                {console.log("state of deviceid==>",this.props.deviceID)}
+                {console.log("state of deviceid==>", this.props.deviceID)}
                 <View>
                     <Header
                         statusBarProps={{ barStyle: "light-content" }}
@@ -78,7 +80,12 @@ class ShopKeeperSignup extends React.Component {
                                     value={this.state.email}
                                     onChangeText={txt => this.setState({ email: txt })}
                                 />
-
+                                <FormLabel>Contact #</FormLabel>
+                                <FormInput
+                                    keyboardType="email-address"
+                                    value={this.state.contact}
+                                    onChangeText={txt => this.setState({ contact: txt })}
+                                />
                                 <FormLabel>Password</FormLabel>
                                 <FormInput
                                     secureTextEntry={true}

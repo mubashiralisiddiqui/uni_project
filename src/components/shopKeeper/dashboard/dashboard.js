@@ -100,12 +100,7 @@ export default class App extends React.Component {
                     rightComponent={
                         <Icon name='home' color="white" />
                     }
-                    centerComponent={
-                        <Text style={{ textAlign: 'center', color: 'white' }}>
-                            {this.state.username}
-                        </Text>
-                    }
-                    //  centerComponent={{ text: "Circles " + this.state.circlenum, style: { color: "#fff" } }}
+                    centerComponent={{ text:this.state.username, style: { color: '#fff' } }}
                     outerContainerStyles={{ backgroundColor: "#009688" }}
                 />
 

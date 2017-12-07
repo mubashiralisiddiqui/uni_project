@@ -20,6 +20,7 @@ export function supplierSignup(obj, navigate) {
                     email: obj.email,
                     name: obj.name,
                     role: "supplier",
+                    contact: obj.contact
 
                 };
                 firebase
@@ -50,7 +51,8 @@ export function shopkeeperSignup(obj, navigate) {
                     email: obj.email,
                     name: obj.name,
                     deviceId: obj.deviceid,
-                    role: "shopkeeper"
+                    role: "shopkeeper",
+                    contact: obj.contact
                 };
                 firebase
                     .database()
