@@ -46,7 +46,7 @@ export default class OrderList extends React.Component {
                                 <ListItem
                                     key={i}
                                     title={"order by " + l.sk_info.name + l.date + l.time}
-                                    onPress={() => { navigate('OrderDetailsScreen', { key: i }) }}
+                                    onPress={() => { navigate('OrderDetailsScreen', { key: i, data: l }) }}
                                 />)
                         })}
                     </List>

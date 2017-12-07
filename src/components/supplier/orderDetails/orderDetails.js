@@ -6,7 +6,7 @@ import * as firebase from 'firebase';
 import { OrderDetailsMiddleware } from '../../../store/middleware/orderDetailMiddleWare'
 import { connect } from 'react-redux'
 
-class OrderDetails extends React.Component {
+export default class OrderDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,31 +14,50 @@ class OrderDetails extends React.Component {
         }
 
     }
-    componentDidMount() {
-        console.log("params==>", this.props.navigation.state.params)
-        this.props.getorder()
-        // firebase.database().ref('order/').on('value', snapshot => {
-        //     snapshot.forEach((messageSnapshot) => {
-        //         let array = [];
-        //         let obj = messageSnapshot.val();
-        //         for (var prop in obj) {
-        //             array.push(obj[prop]);
-        //             console.log('array==>', array)
-        //             this.setState({
-        //                 orderList: array
-        //             })
-        //         }
-        //     })
-        // })
-    }
     render() {
-        const params = this.props.navigation.state.params.key
+        const params = this.props.navigation.state.params.data
+        console.log("params", params)
         return (
             <View>
                 {console.log(this.state.orderList, "state of list")}
                 <Text>Your Orders </Text>
                 <ScrollView>
-
+                    <Card
+                        title="order details"
+                    >
+                        <View>
+                            <View style={{ flexDirection: 'row', flex: 1 }}>
+                                <Icon name="message" color='#00aced' />
+                                <Text style={{ marginLeft: 20 }}>on {params.date}</Text>
+                                <Text style={{ marginLeft: 20 }}>at {params.time}</Text>
+                            </View>
+                            {params.items.map((u, i) => {
+                                return (
+                                    <View>
+                                        <Text>{u}</Text>
+                                    </View>
+                                )
+                            })}
+                        </View>
+                    </Card>
+                    <Card
+                        title="ShopkeeperInfo"
+                    >
+                        <View>
+                            <View style={{ flexDirection: 'row', flex: 1 }}>
+                                <Icon name="person" color='#00aced' />
+                                <Text style={{ marginLeft: 20 }}>Name {params.sk_info.name}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', flex: 1 }}>
+                                <Icon name="email" color='#00aced' />
+                                <Text style={{ marginLeft: 20 }}>Email:{params.sk_info.email}</Text>
+                            </View >
+                            <View style={{ flexDirection: 'row', flex: 1 }}>
+                                <Icon name="phone" color='#00aced' />
+                                <Text style={{ marginLeft: 20 }}>contact:{params.sk_info.contact}</Text>
+                            </View >
+                        </View>
+                    </Card>
 
                 </ScrollView>
 
@@ -46,17 +65,9 @@ class OrderDetails extends React.Component {
         )
     }
 }
-const mapStateToprops = (state) => {
-    return {
-        orderDetails: state.OrderDetailReducer.orderDetails
-    }
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        getorder: () => { dispatch(OrderDetailsMiddleware()) }
-    }
-}
-export default connect(mapStateToprops, mapDispatchToProps)(OrderDetails)
+//sk_info.name
+//sk_info.email
+//sk_info.contact
 
 
 
