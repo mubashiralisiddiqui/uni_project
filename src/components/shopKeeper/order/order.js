@@ -7,7 +7,16 @@ import { connect, } from 'react-redux';
 import OrderList from '../../supplier/orderlist/orderlist';
 //  default from '../../../store/reducers/authReducers';
 import OneSignal from 'react-native-onesignal';
+import { NavigationActions } from 'react-navigation'
 
+const navigateAction = NavigationActions.navigate({
+
+    routeName: 'OrderDetailsScreen',
+
+    params: {},
+
+    action: NavigationActions.navigate({ routeName: 'OrderDetailsScreen' })
+})
 class Order extends React.Component {
     constructor(props) {
         super(props);
@@ -16,6 +25,7 @@ class Order extends React.Component {
             text: '',
             items: [],
         }
+        this.onOpened = this.onOpened.bind(this)
     }
     componentDidMount() {
         firebase.database().ref('users/').on('value', (data => {
@@ -23,8 +33,11 @@ class Order extends React.Component {
             const obj = data.val();
             const array = [];
             for (var prop in obj) {
-                array.push(obj[prop])
-                console.log("array=>", array)
+                if (obj[prop].role === "supplier") {
+                    array.push(obj[prop])
+                    console.log("array=>", array)
+                }
+
             }
             array.map((a, i) => {
                 console.log('mapdata', a.deviceId)
@@ -34,7 +47,7 @@ class Order extends React.Component {
                 }
                 let url = "https://documentation.onesignal.com/reference#section-attachments"
                 playerId = a.deviceId
-                OneSignal.postNotification(contents, data, playerId);
+                OneSignal.postNotification(contents, data, playerId );
             })
         }))
     }
@@ -56,9 +69,8 @@ class Order extends React.Component {
     }
 
     onOpened(openResult) {
-        // const { navigate } = this.props.navigation;
-        // navigate("DrawerOpen");
-        //   this.routechange() 
+        const { navigate } = this.props.navigation;
+        navigate("orderListScreen");
         console.log('Messageby me==: ', openResult.notification.payload.body);
         console.log('Data: ', openResult.notification.payload.additionalData);
         console.log('isActive: ', openResult.notification.isAppInFocus);

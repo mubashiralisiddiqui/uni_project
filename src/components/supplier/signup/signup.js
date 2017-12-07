@@ -42,6 +42,7 @@ class SupplierSignup extends React.Component {
 
     }
     render() {
+        console.log(this.state.contact)
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAwareScrollView>

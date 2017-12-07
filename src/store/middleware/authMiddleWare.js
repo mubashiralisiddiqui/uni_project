@@ -6,8 +6,8 @@ import { AuthAction } from '../actions/authAction'
 
 
 export function supplierSignup(obj, navigate) {
-    console.log(obj.deviceid)
-    console.log('obj', obj)
+    // console.log(obj.deviceid)
+    console.log('obj', obj.contact)
     return dispatch => {
         firebase
             .auth()

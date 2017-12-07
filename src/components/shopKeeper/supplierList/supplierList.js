@@ -80,7 +80,7 @@ export default class SupplierList extends React.Component {
                                 <ListItem
                                     key={i}
                                     title={l.name + "  " + l.role}
-                                    onPress={() => { navigate('SupplierDetailsScreen', { key: i }) }}
+                                    onPress={() => { navigate('SupplierDetailsScreen', { key: i ,data:l}) }}
                                 />
                             )
                         })}
