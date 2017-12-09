@@ -24,6 +24,7 @@ class Order extends React.Component {
         this.state = {
             text: '',
             items: [],
+            data: []
         }
         this.onOpened = this.onOpened.bind(this)
     }
@@ -37,18 +38,8 @@ class Order extends React.Component {
                     array.push(obj[prop])
                     console.log("array=>", array)
                 }
-
             }
-            array.map((a, i) => {
-                console.log('mapdata', a.deviceId)
-                let data = { abc: 'hello hy' } // some array as payload
-                let contents = {
-                    'en': 'You got notification from user'
-                }
-                let url = "https://documentation.onesignal.com/reference#section-attachments"
-                playerId = a.deviceId
-                OneSignal.postNotification(contents, data, playerId );
-            })
+            this.setState({ data: array })        
         }))
     }
     componentWillMount() {
@@ -67,7 +58,6 @@ class Order extends React.Component {
     onReceived(notification) {
         console.log("Notification received: ", notification);
     }
-
     onOpened(openResult) {
         const { navigate } = this.props.navigation;
         navigate("orderListScreen");
@@ -110,15 +100,15 @@ class Order extends React.Component {
         const { navigate } = this.props.navigation;
         navigate('ShopKeeperDashBoardScreen')
     }
-    send() {
-        console.log("send")
-        let data = "hellomvhvhvhg" // some array as payload
-        let contents = {
-            'en': 'You got notification from user'
-        }
-        playerId = "f5fc8ab9-a13b-4e5a-b4ae-a0fed6a5af7a"
-        OneSignal.postNotification(contents, data, playerId);
-    }
+    // send() {
+    //     console.log("send")
+    //     let data = "hellomvhvhvhg" // some array as payload
+    //     let contents = {
+    //         'en': 'You got notification from user'
+    //     }
+    //     playerId = "f5fc8ab9-a13b-4e5a-b4ae-a0fed6a5af7a"
+    //     OneSignal.postNotification(contents, data, playerId);
+    // }
     submitItem() {
         const userid = firebase.auth().currentUser.uid;
         let date = new Date();
@@ -145,7 +135,16 @@ class Order extends React.Component {
                 }
                 let url = "https://documentation.onesignal.com/reference#section-attachments"
                 playerId = "3bb383e7-f333-47a8-8f1e-bf8c73fb2d20"
-                OneSignal.postNotification(contents, data, playerId);
+                // OneSignal.postNotification(contents, data, playerId);
+                this.state.data.map((a, i) => {
+                    console.log('mapdata', a.deviceId)
+                    let data = { abc: 'hello hy' } // some array as payload
+                    let contents = {
+                        'en': 'You got notification from user'
+                    }
+                    playerId = a.deviceId
+                    OneSignal.postNotification(contents, data, playerId);
+                })
             })
     }
     render() {

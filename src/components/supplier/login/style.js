@@ -19,5 +19,8 @@ export const loginStyles = {
         marginTop:5,
         alignItems: 'center'
         
+    },
+    container:{
+        // backgroundColor:'#8D8887'
     }
 }

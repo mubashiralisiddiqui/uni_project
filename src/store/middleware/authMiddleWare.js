@@ -3,7 +3,7 @@ import * as firebase from 'firebase';
 import { NavigationActions } from 'react-navigation';
 import { ToastAndroid } from 'react-native'
 import { AuthAction } from '../actions/authAction'
-
+import { AsyncStorage } from 'react-native';
 
 export function supplierSignup(obj, navigate) {
     // console.log(obj.deviceid)
@@ -83,7 +83,8 @@ export const supplierLogin = (obj, navigate) => {
                         dispatch(AuthAction.login_success(user))
                         navigate('SupplierDashBoardScreen');
                         ToastAndroid.show('lOGIN SUCCESSFUL !', ToastAndroid.SHORT);
-
+                        //   AsyncStorage.setItem('users',userId)
+                        AsyncStorage.setItem('currentUser', JSON.stringify({ userId }));
                     }
                     else {
                         ToastAndroid.show('IncorrectInfo !', ToastAndroid.SHORT);
@@ -111,6 +112,7 @@ export const shopkeeperlogin = (obj, navigate) => {
                         dispatch(AuthAction.shopkeeperDetail(obj))
                         navigate('ShopKeeperDashBoardScreen');
                         ToastAndroid.show("Login SUCCESSFUL !", ToastAndroid.SHORT);
+                        AsyncStorage.setItem('currentUser', JSON.stringify({ userId }));
                     }
                     else {
                         ToastAndroid.show("Incorrect Info !", ToastAndroid.SHORT)

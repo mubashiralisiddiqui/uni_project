@@ -36,7 +36,7 @@ export default class SupplierDetails extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         const params = this.props.navigation.state.params.data
-        console.log("paramss", params)
+        console.log("paramss", params.userId)
         return (
             <View>
                 <ScrollView>
@@ -55,7 +55,12 @@ export default class SupplierDetails extends React.Component {
                                 <Text style={{ marginLeft: 20 }}>Email:{params.email}</Text>
                             </View >
                             <Text style={{ marginLeft: 20 }}>Designation:{params.role}</Text>
-
+                            <Button
+                                title="contact"
+                                icon={{ name: 'send' }}
+                                buttonStyle={{ backgroundColor: '#0097A7', borderRadius: 100 }}
+                                onPress={() => { navigate('chatScreen', { conId: params.userId, id: this.state.currentUser }) }}
+                            />
                         </View>
                     </Card>
                 </ScrollView>

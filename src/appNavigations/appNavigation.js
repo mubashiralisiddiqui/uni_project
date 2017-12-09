@@ -1,10 +1,11 @@
 import React from 'react';
 import { ScrollView } from "react-native";
-import { StackNavigator, DrawerItems, DrawerNavigator } from "react-navigation";
+// import DrawerContent from './drawerContent'
+import { StackNavigator, DrawerItems, DrawerNavigator,DrawerView } from "react-navigation";
 import {
     ShopKeeperSignup, ShopKeeperLogin, SupplierSignup, SupplierLogin,
     ShopekeeperDashBoard, SupplierDashBoard, ShopKeeperOrder, OrderList,
-    OrderDetails, SupplierList, SupplierDetails
+    OrderDetails, SupplierList, SupplierDetails, Chat
 }
     from '../components';
 import Home from '../../App';
@@ -15,6 +16,8 @@ const ShopKeeperdrawNavigator = DrawerNavigator(
         Logout: { screen: ShopKeeperLogin },
         Order: { screen: ShopKeeperOrder },
         suppliers: { screen: SupplierList },
+        chatScreen: { screen: Chat },
+
 
     },
     {
@@ -78,6 +81,7 @@ const navigation = StackNavigator(
         ShopKeeperLoginScreen: { screen: ShopKeeperLogin },
         ShopKeeperDashBoardScreen: { screen: ShopKeeperdrawNavigator },
         SupplierDetailsScreen: { screen: SupplierDetails },
+        chatScreen: { screen: Chat },
 
         SupplierSignupScreen: { screen: SupplierSignup },
         SupplierLoginScreen: { screen: SupplierLogin },
