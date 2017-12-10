@@ -10,7 +10,8 @@ export default class SupplierDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            orderList: []
+            orderList: [],
+            currentUser: firebase.auth().currentUser.uid
         }
 
     }
@@ -59,7 +60,7 @@ export default class SupplierDetails extends React.Component {
                                 title="contact"
                                 icon={{ name: 'send' }}
                                 buttonStyle={{ backgroundColor: '#0097A7', borderRadius: 100 }}
-                                onPress={() => { navigate('chatScreen', { conId: params.userId, id: this.state.currentUser }) }}
+                                onPress={() => { navigate('chatScreen', { suplierId: params.userId, shopKeeperID: this.state.currentUser }) }}
                             />
                         </View>
                     </Card>

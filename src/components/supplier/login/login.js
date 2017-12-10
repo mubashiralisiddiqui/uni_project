@@ -23,8 +23,8 @@ class SupplierLogin extends Component {
     super();
     this.state = {
       user: Object,
-      email: "",
-      password: "",
+      email: "supplier@s.com",
+      password: "123456",
       isLogin: false
     };
   }

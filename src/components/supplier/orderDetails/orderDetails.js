@@ -73,7 +73,7 @@ export default class OrderDetails extends React.Component {
                                 title="contact"
                                 icon={{ name: 'send' }}
                                 buttonStyle={{ backgroundColor: '#0097A7', borderRadius: 100 }}
-                                onPress={() => { navigate('chatScreen', { conId: params.sk_info.userId, id: this.state.currentUser }) }}
+                                onPress={() => { navigate('chatScreen', { suplierId: params.sk_info.userId, shopKeeperID: this.state.currentUser }) }}
                             />
 
                         </View>

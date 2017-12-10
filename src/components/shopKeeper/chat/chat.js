@@ -9,7 +9,8 @@ export default class Chat extends React.Component {
         this.state = {
             messages: [],
             text: '',
-            user: null
+            user: null,
+            key: null
         }
         this.onSend = this.onSend.bind(this)
     }
@@ -29,59 +30,55 @@ export default class Chat extends React.Component {
         } catch (e) {
             console.log(e)
         }
-        const { conId, id } = this.props.navigation.state.params;
-        console.log("conersationid", conId);
-        firebase.database().ref(`/conversations/${conId}`).on('value', (snap) => {
-            console.log("conversationdata",snap.val());
-            const messages = [];
-            const res = snap.val();
-            console.log('snapvalue', res)
-            if (res) {
-                for (let key in res) {
-                    messages.push(res[key]);
+        const { suplierId, shopKeeperID } = this.props.navigation.state.params;
+        console.log("conersationid", suplierId, shopKeeperID);
+        firebase.database().ref(`conversations`).orderByChild('users/' + suplierId).equalTo(true).on('value', (snap) => {
+            console.log("conversationdata", snap.val());
+            if (snap.val() && Object.values(snap.val()).find(a => a.users[shopKeeperID])) {
+                const messages = [];
+                const val = snap.val();
+                const key = Object.keys(val).find(a => val[a].users[shopKeeperID]);
+                const res = val[key].chats
+                console.log('snapvalue', res)
+                if (res) {
+                    for (let key in res) {
+                        messages.push(res[key]);
+                    }
+                    messages.reverse();
                 }
-                // messages.reverse();
-            }
-            this.setState({
-                messages,
-                // loader: false
-            });
-        })
-
-        firebase.database().ref(`/conversations/${conId}`).on('child_added', (snap) => {
-
-            const newMessage = snap.val();
-            const { user } = newMessage;
-            if (user._id !== id) {
-                console.log(true);
-                this.setState((previousState) => ({
-                    messages: GiftedChat.append(previousState.messages, [newMessage]),
-                }));
+                messages = messages.sort((a, b) => a.createdAt - b.createdAt).map(a => ({ ...a, createdAt: new Date(a.createdAt) }))
+                this.setState({
+                    messages,
+                    key
+                });
             } else {
-                console.log(false);
+                firebase.database().ref(`conversations`).push({ users: { [suplierId]: true, [shopKeeperID]: true } })
             }
-
         })
-
     }
 
 
 
 
     onSend(message) {
+        if (this.state.user.name !== null) {
+            console.log(this.state.user.name)
+        }
         console.log(message);
-        const { conId } = this.props.navigation.state.params;
-        console.log("conbersationId", conId);
-        firebase.database().ref(`/conversations/${conId}`).push(message[0]);
-        this.setState((previousState) => ({
-            messages: GiftedChat.append(previousState.messages, message),
-        }));
+        message = message.map(a => ({ ...a, createdAt: a.createdAt.getTime(), user: { name: 'M' }, }))
+        const { key } = this.state;
+        console.log("conbersationId", key);
+        if (key) {
+            firebase.database().ref(`/conversations/${key}/chats`).push(message[0]);
+        }
     }
 
     render() {
         const { user } = this.state;
         const id = firebase.auth().currentUser.uid
         // console.log("render==>", user.userId)
+
+        console.log("state of user", this.state.user)
         return (
             <GiftedChat
                 messages={this.state.messages}

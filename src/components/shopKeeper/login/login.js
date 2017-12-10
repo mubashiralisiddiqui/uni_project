@@ -21,8 +21,8 @@ class ShopKeeperLogin extends Component {
     super();
     this.state = {
       user: '',
-      email: "",
-      password: "",
+      email: "sh@sh.com",
+      password: "123456",
       isLogin: false
     };
   }
