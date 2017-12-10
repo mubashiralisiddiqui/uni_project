@@ -81,7 +81,7 @@ const navigation = StackNavigator(
         ShopKeeperLoginScreen: { screen: ShopKeeperLogin },
         ShopKeeperDashBoardScreen: { screen: ShopKeeperdrawNavigator },
         SupplierDetailsScreen: { screen: SupplierDetails },
-        chatScreen: { screen: Chat },
+        // chatScreen: { screen: Chat },
 
         SupplierSignupScreen: { screen: SupplierSignup },
         SupplierLoginScreen: { screen: SupplierLogin },

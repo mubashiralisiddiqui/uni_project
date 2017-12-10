@@ -29,9 +29,6 @@ export default class Chat extends React.Component {
         } catch (e) {
             console.log(e)
         }
-
-
-        console.log()
         const { conId, id } = this.props.navigation.state.params;
         console.log("conersationid", conId);
         firebase.database().ref(`/conversations/${conId}`).on('value', (snap) => {
@@ -43,7 +40,7 @@ export default class Chat extends React.Component {
                 for (let key in res) {
                     messages.push(res[key]);
                 }
-                messages.reverse();
+                // messages.reverse();
             }
             this.setState({
                 messages,
@@ -70,35 +67,7 @@ export default class Chat extends React.Component {
 
 
 
-    componentWillMount() {
-        const id = firebase.auth().currentUser.uid
-        // const { id } = this.props.navigation.state.params;/
-        console.log("userid", id)
-        // console.log("uid==>", firebase.auth().currentUser.uid)
-        // this.setState({
-        //     messages: [
-        //         {
-        //             _id: params,
-        //             text: 'My message',
-        //             createdAt: new Date(Date.UTC(2016, 5, 11, 17, 20, 0)),
-        //             user: {
-        //                 _id: 2,
-        //                 name: 'React Native',
-        //                 avatar: 'https://facebook.github.io/react/img/logo_og.png',
-        //             },
-        //             image: 'https://facebook.github.io/react/img/logo_og.png',
-        //             // Any additional custom parameters are passed through
-        //         },
-        //     ],
-        // });
-    }
-    // onSend(messages = []) {
-    //     this.setState((previousState) => {
-    //       return {
-    //         messages: GiftedChat.append(previousState.messages, messages),
-    //       };
-    //     });
-    //   }
+
     onSend(message) {
         console.log(message);
         const { conId } = this.props.navigation.state.params;
