@@ -16,7 +16,7 @@ const ShopKeeperdrawNavigator = DrawerNavigator(
         Logout: { screen: ShopKeeperLogin },
         Order: { screen: ShopKeeperOrder },
         suppliers: { screen: SupplierList },
-        chatScreen: { screen: Chat },
+        // chatScreen: { screen: Chat },
 
 
     },
@@ -81,7 +81,7 @@ const navigation = StackNavigator(
         ShopKeeperLoginScreen: { screen: ShopKeeperLogin },
         ShopKeeperDashBoardScreen: { screen: ShopKeeperdrawNavigator },
         SupplierDetailsScreen: { screen: SupplierDetails },
-        // chatScreen: { screen: Chat },
+        chatScreen: { screen: Chat },
 
         SupplierSignupScreen: { screen: SupplierSignup },
         SupplierLoginScreen: { screen: SupplierLogin },
