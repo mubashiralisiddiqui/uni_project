@@ -1,99 +1,109 @@
+
 import React from 'react';
-import { ScrollView } from "react-native";
-// import DrawerContent from './drawerContent'
-import { StackNavigator, DrawerItems, DrawerNavigator,DrawerView } from "react-navigation";
+import { ScrollView, Text } from "react-native";
+import ShopkeeperDrawerContent from './drawerContent'
+import SupplierDrawerContent from './supplierDrawerContent'
+import { StackNavigator, DrawerItems, DrawerNavigator, DrawerView } from "react-navigation";
 import {
-    ShopKeeperSignup, ShopKeeperLogin, SupplierSignup, SupplierLogin,
-    ShopekeeperDashBoard, SupplierDashBoard, ShopKeeperOrder, OrderList,
-    OrderDetails, SupplierList, SupplierDetails, Chat
+  ShopKeeperSignup, ShopKeeperLogin, SupplierSignup, SupplierLogin,
+  ShopekeeperDashBoard, SupplierDashBoard, ShopKeeperOrder, OrderList,
+  OrderDetails, SupplierList, SupplierDetails, Chat, ShopkeepersList, ShopkeeperDetails
 }
-    from '../components';
+  from '../components';
 import Home from '../../App';
-
-const ShopKeeperdrawNavigator = DrawerNavigator(
-    {
-        DashBoard: { screen: ShopekeeperDashBoard },
-        Logout: { screen: ShopKeeperLogin },
-        Order: { screen: ShopKeeperOrder },
-        suppliers: { screen: SupplierList },
-        // chatScreen: { screen: Chat },
+import { supplierLogin } from '../store/middleware/authMiddleWare';
 
 
+
+const SupplierDrawerStack = DrawerNavigator({
+  DashBoard: { screen: SupplierDashBoard },
+  orderListScreen: { screen: OrderList },
+  shopkeepers: { screen: ShopkeepersList },
+ 
+  Logout: { screen: SupplierLogin },
+ 
+},
+  {
+    gesturesEnabled: false,
+    contentComponent: SupplierDrawerContent
+  },
+
+)
+
+const ShopkeeperDrawerStack = DrawerNavigator({
+  DashBoard: { screen: ShopekeeperDashBoard },
+  suppliers: { screen: SupplierList },
+  Order: { screen: ShopKeeperOrder },
+  Logout: { screen: ShopKeeperLogin },
+},
+
+  {
+    gesturesEnabled: false,
+    contentComponent: ShopkeeperDrawerContent
+  },
+
+)
+
+const ShopkeeperDrawerNavigation = StackNavigator({
+  DrawerStack: { screen: ShopkeeperDrawerStack },
+  SupplierDetailsScreen: { screen: SupplierDetails },
+
+  chatScreen: { screen: Chat },
+
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+      // header: null
+      
     },
-    {
-        contentComponent: props => {
-            return (
-                <ScrollView>
-                    <DrawerItems {...props} key={props} style={{ color: 'red' }} />
-                </ScrollView>
-            );
-        },
-        contentOptions: {
-            drawerWidth: '50px',
-            activeTintColor: "#339cc9",
-            style: {
-                flex: 1,
-                paddingTop: 15,
-            }
-        }
-    }
-);
-ShopKeeperdrawNavigator.navigationOptions = {
-    header: null
-};
-const SupplierDrawNavigator = DrawerNavigator(
-    {
-        //   MyProfile: { screen: Profile },
 
-        DashBoard: { screen: SupplierDashBoard },
-        Logout: { screen: SupplierLogin },
-        // Order: { screen: ShopKeeperOrder },
+  })
+const SupplierDrawerNavigation = StackNavigator({
+  DrawerStack: { screen: SupplierDrawerStack },
+  ShopkeeperDetailsScreen: { screen: ShopkeeperDetails },
+  OrderDetailsScreen: { screen: OrderDetails },
+  chatScreen: { screen: Chat },
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+      // header: null
+    }
+  })
+
+const PrimaryStack = StackNavigator({
+  ShopKeeperSignupScreen: { screen: ShopKeeperSignup },
+  ShopKeeperLoginScreen: { screen: ShopKeeperLogin },
+  SupplierLoginScreen: { screen: SupplierLogin },
+  SupplierSignupScreen: { screen: SupplierSignup },
+  HomeScreen: { screen: Home },
+  ShopKeeperDashBoardScreen: { screen: ShopkeeperDrawerNavigation },
+  SupplierDashBoardScreen: { screen: SupplierDrawerNavigation }
+}, {
+    headerMode: 'float',
+    navigationOptions: {
+      // header: null
     },
-    {
-        contentComponent: props => {
-            return (
-                <ScrollView>
-                    <DrawerItems {...props} key={props} />
-                </ScrollView>
-            );
-        },
-        contentOptions: {
-            drawerWidth: '50px',
-            activeTintColor: "#339cc9",
-            style: {
-                flex: 1,
-                paddingTop: 15,
-                color: '#339cc9'
-            }
-        }
-    }
-);
+    initialRouteName: 'HomeScreen',
+  })
 
-SupplierDrawNavigator.navigationOptions = {
-    header: null
-};
+
+export default PrimaryStack;
 
 
 
-const navigation = StackNavigator(
-    {
-        ShopKeeperSignupScreen: { screen: ShopKeeperSignup },
-        ShopKeeperLoginScreen: { screen: ShopKeeperLogin },
-        ShopKeeperDashBoardScreen: { screen: ShopKeeperdrawNavigator },
-        SupplierDetailsScreen: { screen: SupplierDetails },
-        chatScreen: { screen: Chat },
 
-        SupplierSignupScreen: { screen: SupplierSignup },
-        SupplierLoginScreen: { screen: SupplierLogin },
-        SupplierDashBoardScreen: { screen: SupplierDrawNavigator },
-        orderListScreen: { screen: OrderList },
-        OrderDetailsScreen: { screen: OrderDetails },
-        HomeScreen: { screen: Home },
-    },
-    {
-        headerMode: "screen",
-        initialRouteName: "HomeScreen"
-    }
-);
 
-export default navigation;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

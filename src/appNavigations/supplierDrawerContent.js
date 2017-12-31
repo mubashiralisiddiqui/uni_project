@@ -5,22 +5,34 @@ import { Icon, Button } from 'react-native-elements';
 import OrderIcon from 'react-native-vector-icons/EvilIcons';
 import LoginIcon from 'react-native-vector-icons/SimpleLineIcons';
 import SupplierIcon from 'react-native-vector-icons/FontAwesome';
-import { logout, shopkeeperSignup } from '../store/middleware/authMiddleWare'
+import NotificationIcon from 'react-native-vector-icons/MaterialIcons';
+import ShopIcon from 'react-native-vector-icons/Entypo';
+import { logout } from '../store/middleware/authMiddleWare'
 import { connect } from 'react-redux';
 
-class DrawerContainer extends React.Component {
+class SupplierDrawerContainer extends React.Component {
     constructor(props) {
         super(props)
         this.logoutm = this.logoutm.bind(this)
     }
+    // logout = () => {
+    //     // This will reset back to loginStack
+    //     // https://github.com/react-community/react-navigation/issues/1127
+    //     console.log('helloooooo', this.props.navigation.dispatch(logout))
+    //     const actionToDispatch = NavigationActions.reset({
+    //         index: 0,
+    //         key: null,  // black magic
+    //         actions: [NavigationActions.navigate({ routeName: 'loginStack' })]
+    //     })
+    //     this.props.navigation.dispatch(logout)
+
+    // }
     logoutm() {
         const { navigate } = this.props.navigation
 
         this.props.logout(navigate)
     }
-    static navigationOptions = {
-        header: null
-    }
+
     render() {
         const { navigation } = this.props
         return (
@@ -38,30 +50,30 @@ class DrawerContainer extends React.Component {
                 <View style={{ display: 'flex', flexDirection: 'row', marginLeft: 20 }}>
                     <Icon name="home" color="#659EC7" />
                     <Text
-                        onPress={() => navigation.navigate('ShopKeeperDashBoardScreen')}
+                        onPress={() => navigation.navigate('SupplierDashBoardScreen')}
                         style={styles.uglyDrawerItem}>
                         HOME
                 </Text>
 
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', marginLeft: 20 }}>
-                    <OrderIcon color="#659EC7" name="cart" size={30} style={{ marginTop: 15 }} />
+                    <NotificationIcon color="#659EC7" name="notifications" size={30} style={{ marginTop: 15 }} />
                     <Text
-                        onPress={() => navigation.navigate('Order')}
+                        onPress={() => navigation.navigate('orderListScreen')}
                         style={styles.uglyDrawerItem}
                     >
-                        ORDER
+                        Notifications
                    </Text>
                 </View>
 
 
                 <View style={{ display: 'flex', flexDirection: 'row', marginLeft: 20 }}>
-                    <SupplierIcon name="users" color="#659EC7" size={30} style={{ marginTop: 15 }} />
+                    <ShopIcon name="shop" color="#659EC7" size={30} style={{ marginTop: 15 }} />
                     <Text
-                        onPress={() => navigation.navigate('suppliers')}
+                        onPress={() => navigation.navigate('shopkeepers')}
                         style={styles.uglyDrawerItem}
                     >
-                        SUPPLIERS
+                        Shopkeepers
                 </Text>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', marginLeft: 20 }}>
@@ -73,6 +85,7 @@ class DrawerContainer extends React.Component {
 
                         Log Out
                      </Text>
+                    {/* <Button title="logout" onPress={()=>{this.logoutm()}} /> */}
                 </View>
             </View>
         )
@@ -83,6 +96,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f6f6f6',
+        // paddingTop: 20,
+        // paddingHorizontal: 20
     },
     uglyDrawerItem: {
         fontSize: 18,
@@ -100,9 +115,19 @@ const styles = StyleSheet.create({
         marginLeft: 10
     }
 })
+// const mapStateToProps = (state) => {
+//     return {
+//         state
+//     }
+// }
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         logoutdispatch: () => { dispatch(logout()) }
+//     }
+// }
 const mapDispatchToProps = (dispatch) => {
     return {
         logout: (navigate) => { dispatch(logout(navigate)) }
     }
 }
-export default connect(null, mapDispatchToProps)(DrawerContainer)
+export default connect(null, mapDispatchToProps)(SupplierDrawerContainer)

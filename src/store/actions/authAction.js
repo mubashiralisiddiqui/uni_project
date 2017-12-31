@@ -3,7 +3,7 @@ export class AuthAction {
     static LOGIN_SUCCESS = "LOGIN_SUCCESS"
     static SIGNUP = "SIGNUP";
     static SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
-
+    static LOGOUT = "LOGOUT";
     static SHOPKEEPER_DETAIL = 'SHOPKEEPER_DETAIL'
 
     static login = (payload) => ({
@@ -31,5 +31,10 @@ export class AuthAction {
             payload
         })
 
-
+        static logout = (payload) =>
+        ({
+            type: AuthAction.LOGOUT,
+            payload
+        })
+   
 }

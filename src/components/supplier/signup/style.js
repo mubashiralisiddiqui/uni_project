@@ -9,7 +9,7 @@ export const signupStyles = {
         flexDirection: 'row',
     },
     form: {
-        marginTop: 50
+        marginTop: 80
 
     },
     formHeading: {
@@ -20,8 +20,9 @@ export const signupStyles = {
         marginTop: 20
     },
     SignupButton: {
-        backgroundColor: '#0097A7',
-        marginTop: 25
+        backgroundColor: '#659EC7',
+        marginTop: 25,
+        borderRadius:10
     },
     formFields: {
         marginTop: -10

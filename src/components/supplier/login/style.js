@@ -1,6 +1,6 @@
 export const loginStyles = {
     form: {
-        marginTop: 160
+        marginTop: 80
     },
     formHeading: {
         textAlign: 'center',
@@ -12,8 +12,9 @@ export const loginStyles = {
         marginTop: 0
     },
     loginButton: {
-        backgroundColor: '#0097A7',
-        marginTop: 25
+        backgroundColor: '#659EC7',
+        marginTop: 25,
+        borderRadius:10
     },
     registerSuggestionText: {
         marginTop:5,
@@ -21,6 +22,6 @@ export const loginStyles = {
         
     },
     container:{
-        // backgroundColor:'#8D8887'
+        backgroundColor:'white'
     }
 }

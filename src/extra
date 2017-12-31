@@ -1,0 +1,252 @@
+// import React from 'react';
+// import { ScrollView } from "react-native";
+// import DrawerContent from './drawerContent'
+// import { StackNavigator, DrawerItems, DrawerNavigator, DrawerView, SafeAreaView } from "react-navigation";
+// import {
+//     ShopKeeperSignup, ShopKeeperLogin, SupplierSignup, SupplierLogin,
+//     ShopekeeperDashBoard, SupplierDashBoard, ShopKeeperOrder, OrderList,
+//     OrderDetails, SupplierList, SupplierDetails, Chat
+// }
+//     from '../components';
+// import Home from '../../App';
+
+// const ShopKeeperdrawNavigator = DrawerNavigator(
+
+//     {
+//         dashboard: { screen: ShopekeeperDashBoard },
+//         DashBoard: { screen: ShopekeeperDashBoard },
+//     },
+//     {
+//         contentComponent: ({ navigation }) => {
+//             return (
+//                 <ScrollView>
+//                     <DrawerContent navigation={navigation} />
+//                 </ScrollView>
+//             );
+//         }
+//     }
+
+
+//     // {
+//     //     DashBoard: { screen: ShopekeeperDashBoard },
+//     //     Logout: { screen: ShopKeeperLogin },
+//     //     Order: { screen: ShopKeeperOrder },
+//     //     suppliers: { screen: SupplierList },
+//     //     // chatScreen: { screen: Chat },
+
+//     // {
+//     //     Main: { screen: ShopekeeperDashBoard },
+//     //     Order: { screen: ShopKeeperOrder },
+//     // },
+//     // // },
+//     // {
+//     //     contentComponent: DrawerContent,
+//     // },
+//     // {
+//     //     contentComponent: props => {
+//     //         return (
+//     //             <ScrollView>
+//     //                 <OrderDetails />
+//     //                 {/* <DrawerItems {...props} key={props} style={{ color: 'red' }} /> */}
+//     //             </ScrollView>
+//     //         );
+//     //     },
+
+//     //     // contentOptions: {
+//     //     //     drawerWidth: '50px',
+//     //     //     activeTintColor: "#339cc9",
+//     //     //     style: {
+//     //     //         flex: 1,
+//     //     //         paddingTop: 15,
+//     //     //     }
+//     //     // }
+//     // }
+// );
+// ShopKeeperdrawNavigator.navigationOptions = {
+//     header: null
+// };
+// const SupplierDrawNavigator = DrawerNavigator(
+//     {
+//         //   MyProfile: { screen: Profile },
+
+//         DashBoard: { screen: SupplierDashBoard },
+//         Logout: { screen: SupplierLogin },
+//         // Order: { screen: ShopKeeperOrder },
+//     },
+//     {
+//         contentComponent: props => {
+//             return (
+//                 <ScrollView>
+//                     <DrawerItems {...props} key={props} />
+//                 </ScrollView>
+//             );
+//         },
+//         contentOptions: {
+//             drawerWidth: '50px',
+//             activeTintColor: "#339cc9",
+//             style: {
+//                 flex: 1,
+//                 paddingTop: 15,
+//                 color: '#339cc9'
+//             }
+//         }
+//     }
+// );
+
+// SupplierDrawNavigator.navigationOptions = {
+//     header: null
+// };
+
+
+
+// const navigation = StackNavigator(
+//     {
+//         ShopKeeperSignupScreen: { screen: ShopKeeperSignup },
+//         ShopKeeperLoginScreen: { screen: ShopKeeperLogin },
+//         ShopKeeperDashBoardScreen: { screen: ShopKeeperdrawNavigator },
+//         SupplierDetailsScreen: { screen: SupplierDetails },
+//         chatScreen: { screen: Chat },
+//         orderScreen: { screen: ShopKeeperOrder },
+//         suppliers: { screen: SupplierList },
+
+//         SupplierSignupScreen: { screen: SupplierSignup },
+//         SupplierLoginScreen: { screen: SupplierLogin },
+//         SupplierDashBoardScreen: { screen: SupplierDrawNavigator },
+//         orderListScreen: { screen: OrderList },
+//         OrderDetailsScreen: { screen: OrderDetails },
+//         HomeScreen: { screen: Home },
+//     },
+//     {
+//         headerMode: "screen",
+//         initialRouteName: "HomeScreen"
+//     }
+// );
+
+// export default navigation;
+
+
+
+
+
+import React from 'react';
+import { ScrollView, Text } from "react-native";
+import ShopkeeperDrawerContent from './drawerContent'
+import SupplierDrawerContent from './supplierDrawerContent'
+import { StackNavigator, DrawerItems, DrawerNavigator, DrawerView } from "react-navigation";
+import {
+  ShopKeeperSignup, ShopKeeperLogin, SupplierSignup, SupplierLogin,
+  ShopekeeperDashBoard, SupplierDashBoard, ShopKeeperOrder, OrderList,
+  OrderDetails, SupplierList, SupplierDetails, Chat, ShopkeepersList, ShopkeeperDetails
+}
+  from '../components';
+import Home from '../../App';
+import { supplierLogin } from '../store/middleware/authMiddleWare';
+
+
+
+const SupplierDrawerStack = DrawerNavigator({
+  DashBoard: { screen: SupplierDashBoard },
+  shopkeepers: { screen: ShopkeepersList },
+  Logout: { screen: SupplierLogin },
+  Order: { screen: ShopKeeperOrder },
+},
+  {
+    gesturesEnabled: false,
+    contentComponent: SupplierDrawerContent
+  },
+
+)
+
+const ShopkeeperDrawerStack = DrawerNavigator({
+  DashBoard: { screen: ShopekeeperDashBoard },
+  Order: { screen: ShopKeeperOrder },
+  suppliers: { screen: SupplierList },
+  Logout: { screen: ShopKeeperLogin },
+}, {
+    gesturesEnabled: false,
+    contentComponent: ShopkeeperDrawerContent
+  })
+
+const DrawerNavigation = StackNavigator({
+  DrawerStack: { screen: ShopkeeperDrawerStack }
+}, {
+    headerMode: 'float',
+    navigationOptions: {
+      header: null
+    }
+  })
+
+
+
+const supplierLoginStack = StackNavigator({
+  SupplierDashBoardScreen: { screen: SupplierDrawerStack },
+  ShopkeeperDetailsScreen: { screen: ShopkeeperDetails },
+  shopkeepers: { screen: ShopkeepersList },
+  chatScreen: { screen: Chat },
+  OrderDetailsScreen: { screen: OrderDetails },
+  orderListScreen: { screen: OrderList },
+},
+{
+  // Default config for all screens
+  headerMode: 'screen',
+  initialRouteName: 'HomeScreen',
+  // navigationOptions: {
+  //   header: null
+  // }
+}
+
+)
+
+const shopkeeperLoginStack = StackNavigator({
+  ShopKeeperDashBoardScreen: { screen: DrawerNavigation },
+  SupplierDetailsScreen: { screen: SupplierDetails },
+  suppliers: { screen: SupplierList },
+  chatScreen: { screen: Chat },
+  Order: { screen: ShopKeeperOrder },
+},
+{
+  // Default config for all screens
+  headerMode: 'screen',
+  initialRouteName: 'HomeScreen',
+  // navigationOptions: {
+  //   header: null
+  // }
+}
+)
+
+const PrimaryStack = StackNavigator({
+  ShopKeeperSignupScreen: { screen: ShopKeeperSignup },
+  ShopKeeperLoginScreen: { screen: ShopKeeperLogin },
+  SupplierLoginScreen: { screen: SupplierLogin },
+  SupplierSignupScreen: { screen: SupplierSignup },
+  HomeScreen: { screen: Home },
+  ShopKeeperDashBoardScreen:{screen:shopkeeperLoginStack}
+}, {
+    headerMode: 'screen',
+    navigationOptions: {
+      // header: null
+    },
+    initialRouteName: 'HomeScreen',
+  })
+
+
+export default PrimaryStack;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

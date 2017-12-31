@@ -6,7 +6,6 @@ const initalState = {
 }
 
 const deviceIDReducer = (state = initalState, action) => {
-    console.log("idreducer", action.payload)
     switch (action.type) {
         case DeviceIdAction.GETDEVICEID: {
             return {

@@ -98,7 +98,7 @@ export const supplierLogin = (obj, navigate) => {
             });
     }
 }
-export const shopkeeperlogin = (obj, navigate) => {
+export const shopkeeperlogin = (obj, navigate, islogin) => {
     console.log("ididdididididid", obj.id)
     return dispatch => {
         firebase.auth()
@@ -110,6 +110,7 @@ export const shopkeeperlogin = (obj, navigate) => {
                     console.log('usershpkeepeer', obj.role)
                     if (obj.role === 'shopkeeper') {
                         dispatch(AuthAction.shopkeeperDetail(obj))
+                        dispatch(AuthAction.login_success)
                         navigate('ShopKeeperDashBoardScreen');
                         ToastAndroid.show("Login SUCCESSFUL !", ToastAndroid.SHORT);
                         AsyncStorage.setItem('currentUser', JSON.stringify({ userId }));
@@ -127,4 +128,19 @@ export const shopkeeperlogin = (obj, navigate) => {
             });
     }
 
+
+}
+export const logout = (navigate) => {
+    return dispatch => {
+        firebase.auth().signOut().then(function () {
+            // Sign-out successful.
+            dispatch(AuthAction.logout())
+            navigate('HomeScreen')
+            ToastAndroid.show(" you have Logout !", ToastAndroid.SHORT);
+        }).catch(function (error) {
+            // An error happened.
+            alert(error)
+            console.log(error)
+        });
+    }
 }

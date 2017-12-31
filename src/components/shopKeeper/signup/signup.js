@@ -14,8 +14,7 @@ import * as firebase from 'firebase'
 import styles from './style'
 import { signupStyles } from "./style";
 import { shopkeeperSignup } from '../../../store/middleware/authMiddleWare';
-// import default from '../../supplier/signup/signup';
-import OneSignal from 'react-native-onesignal'
+import OneSignal from 'react-native-onesignal';
 class ShopKeeperSignup extends React.Component {
     constructor(props) {
         super(props);
@@ -24,13 +23,12 @@ class ShopKeeperSignup extends React.Component {
             lastName: '',
             password: '',
             email: '',
-            contact:0
+            contact: 0
         }
     }
     static navigationOptions = {
         header: null
     }
-
     signup() {
         const { navigate } = this.props.navigation
         let obj = {
@@ -38,7 +36,7 @@ class ShopKeeperSignup extends React.Component {
             email: this.state.email,
             pasword: this.state.password,
             deviceid: this.props.deviceID,
-            contact:this.state.contact
+            contact: this.state.contact
         }
         this.props.signup(obj, navigate)
     }
@@ -47,19 +45,16 @@ class ShopKeeperSignup extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAwareScrollView>
-                {console.log("state of deviceid==>", this.props.deviceID)}
                 <View>
                     <Header
                         statusBarProps={{ barStyle: "light-content" }}
-
                         centerComponent={{
                             text: " SHOPKEEPER SIGNUP",
-                            style: { color: "#fff" }
+                            style: { color: "#fff", fontFamily: 'Times New Roman' }
                         }}
-                        outerContainerStyles={{ backgroundColor: "#0097A7" }}
+                        outerContainerStyles={{ backgroundColor: "#659EC7" }}
                     />
                     <View style={signupStyles.form}>
-                        <Text style={signupStyles.formHeading}>Signup Form</Text>
                         <View style={signupStyles.formFields}>
                             <View>
                                 <FormLabel>First Name</FormLabel>
@@ -67,13 +62,11 @@ class ShopKeeperSignup extends React.Component {
                                     onChangeText={txt => this.setState({ firstName: txt })}
                                     value={this.state.firstName}
                                 />
-
                                 <FormLabel>Last Name</FormLabel>
                                 <FormInput
                                     onChangeText={txt => this.setState({ lastName: txt })}
                                     value={this.state.lastName}
                                 />
-
                                 <FormLabel>Email</FormLabel>
                                 <FormInput
                                     keyboardType="email-address"

@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  BackHandler
 } from 'react-native';
 import {
   Button,
@@ -27,57 +28,51 @@ class App extends Component {
 
     }
     this.onIds = this.onIds.bind(this)
-    console.log('constructure running')
+    this.onOpened = this.onOpened.bind(this)
   }
-  componentDidMount() {
-    OneSignal.configure({
-      onIdsAvailable: (device) => {
-        console.log('UserId = ', device.userId);
-        console.log('PushToken = ', device.pushToken);
-      },
-      onNotificationReceived: (notification) => {
-        console.log('MESSAGE RECEIVED: ', notification["notification"]["notificationID"]);
-      },
-      onNotificationOpened: (openResult) => {
-        console.log('MESSAGE: ', openResult["notification"]["payload"]["body"]);
-        console.log('DATA: ', openResult["notification"]["payload"]["additionalData"]);
-        console.log('ISACTIVE: ', openResult["notification"]["isAppInFocus"]);
-
-      }
-    });
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
-
-
-
-
-  handleNotification(message, data, isActive) {
-    console.log(message, data, isActive)
-    if (isActive) {
-      // TODO: Toast Notification
-      alert("active")
-
-    } else {
-      // TODO: Go to the room
-      console.log('not active')
-    }
+  handleBackButton() {
+    return true;
   }
   componentWillMount() {
-
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    OneSignal.addEventListener('received', this.onReceived);
+    OneSignal.addEventListener('opened', this.onOpened);
+    OneSignal.addEventListener('registered', this.onRegistered);
     OneSignal.addEventListener('ids', this.onIds);
   }
-
   componentWillUnmount() {
-
+    OneSignal.removeEventListener('received', this.onReceived);
+    OneSignal.removeEventListener('opened', this.onOpened);
+    OneSignal.removeEventListener('registered', this.onRegistered);
     OneSignal.removeEventListener('ids', this.onIds);
   }
-  onIds(device) {
+  onReceived(notification) {
+    console.log("Notification received: ", notification);
+  }
+  onOpened(openResult) {
+    const { navigate } = this.props.navigation;
+    navigate("orderListScreen");
+    console.log('Messageby me==: ', openResult.notification.payload.body);
+    console.log('Data: ', openResult.notification.payload.additionalData);
+    console.log('isActive: ', openResult.notification.isAppInFocus);
+    console.log('openResult: ', openResult);
+  
+  }
 
+  onRegistered(notifData) {
+    console.log("Device had been registered for push notifications!", notifData);
+  }
+
+  onIds(device) {
+    console.log('Device info: ', device);
+    OneSignal.addEventListener('ids', this.onIds);
     const id = device.userId
     console.log('Device info: ', id);
     this.props.decviceinfo(id)
-
   }
-
   static navigationOptions = {
     header: null
   }
@@ -85,20 +80,20 @@ class App extends Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Header
-          centerComponent={{ text: 'Welcome To E Supply App', style: { color: '#fff',fontStyle:"italic",fontSize:25 } }}
-          outerContainerStyles={{ backgroundColor: "#0288D1" }}
-        />
-        <Image source={require('./appLogo.png')} style={{ width: 200, height: 200, borderRadius: 100 }} />
+        <Image
+          source={require('./appLogo.png')}
+          style={{ width: 200, height: 200, borderRadius: 100, marginBottom: 50 }} />
         <Button
-          title="Login As ShopKeeper "
+          title="Login As ShopKeeper"
           buttonStyle={styles.SignupButton}
           onPress={() => navigate('ShopKeeperLoginScreen')}
+          textStyle={{fontFamily:'Georgia',color:'#659EC7',fontWeight:'bold'}}
         />
         <Button
           title="Login As Supplier"
           buttonStyle={styles.SignupButton}
           onPress={() => navigate('SupplierLoginScreen')}
+          textStyle={{fontFamily:'Georgia',color:'#659EC7',fontWeight:'bold'}}
         />
       </View>
     );
@@ -110,6 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:'#659EC7'
 
   },
   welcome: {
@@ -118,12 +114,16 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   SignupButton: {
-    backgroundColor: '#0288D1',
+    backgroundColor: 'white',
     marginTop: 25,
-    borderRadius: 50,
-    // width: 50,
-    // height: 100
-
+    borderRadius: 10,
+    height:50
+  },
+  titleStyle: {
+    color: '#fff',
+    fontStyle: "italic",
+    fontSize: 20,
+    fontFamily: 'Times New Roman'
   }
 });
 const mapDispatchToProps = (dispatch) => {

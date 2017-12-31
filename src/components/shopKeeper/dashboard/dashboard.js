@@ -36,10 +36,9 @@ export default class App extends React.Component {
             },
         };
     }
-    componentDidMount() {   
+    componentDidMount() {
         let currentuser = firebase.auth().currentUser.uid
         firebase.database().ref('users/' + currentuser).on('value', (data) => {
-            console.log(data.val())
             let obj = data.val();
             this.setState({
                 username: obj.name
@@ -75,18 +74,18 @@ export default class App extends React.Component {
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
     }
-    
+
     onRegionChange(region) {
         this.setState({ region });
     }
     static navigationOptions = {
-        header: null
+      header:null,
+      
     }
     render() {
         const { navigate } = this.props.navigation
         return (
             <View style={styles.container}>
-                {console.log("regions==>", this.state.region)}
                 <Header
                     leftComponent={
                         <Icon
@@ -100,8 +99,8 @@ export default class App extends React.Component {
                     rightComponent={
                         <Icon name='home' color="white" />
                     }
-                    centerComponent={{ text:this.state.username, style: { color: '#fff' } }}
-                    outerContainerStyles={{ backgroundColor: "#009688" }}
+                    centerComponent={{ text: this.state.username, style: { color: '#fff' } }}
+                    outerContainerStyles={{ backgroundColor: '#659EC7' }}
                 />
 
                 <MapView

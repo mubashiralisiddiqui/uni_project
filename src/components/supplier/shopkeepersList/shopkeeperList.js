@@ -1,26 +1,26 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+
 import { Button, List, ListItem, Icon, Header } from 'react-native-elements';
 import * as firebase from 'firebase';
-import LoginIcon from 'react-native-vector-icons/FontAwesome';
 
-export default class SupplierList extends React.Component {
+export default class ShopkeepersList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             orderList: []
         }
+
     }
     static navigationOptions = {
-        header:null
-      }
+        header: null
+    }
     componentDidMount() {
-        const { navigate } = this.props.navigation;
         firebase.database().ref('users/').on('value', snapshot => {
             let obj = snapshot.val();
             let array = [];
             for (var prop in obj) {
-                if (obj[prop].role === "supplier") {
+                if (obj[prop].role === "shopkeeper") {
                     array.push(obj[prop])
                 }
             }
@@ -44,12 +44,11 @@ export default class SupplierList extends React.Component {
                         />
                     }
                     rightComponent={
-                        <Icon name='home' color="white" />
+                        <Icon name='home' color="white" onPress={()=>navigate('SupplierDashBoardScreen')}/>
                     }
-                    centerComponent={{ text: "All suppliers ", style: { color: "#fff",fontFamily: 'Times New Roman',fontWeight:'bold' } }}
+                    centerComponent={{ text: "All Shopkeepers ", style: { color: "#fff" } }}
                     outerContainerStyles={{ backgroundColor: "#659EC7" }}
                 />
-
                 <ScrollView style={{ marginTop: 50 }}>
                     <List>
                         {this.state.orderList.map((l, i) => {
@@ -57,13 +56,12 @@ export default class SupplierList extends React.Component {
                                 <ListItem
                                     key={i}
                                     title={l.name + "  " + l.role}
-                                    onPress={() => { navigate('SupplierDetailsScreen', { key: i, data: l }) }}
+                                    onPress={() => { navigate('ShopkeeperDetailsScreen', { key: i ,data:l}) }}
                                 />
                             )
                         })}
                     </List>
                 </ScrollView>
-
             </View>
         )
     }

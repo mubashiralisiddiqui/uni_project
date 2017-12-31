@@ -19,9 +19,8 @@ export default class Chat extends React.Component {
         try {
             const res = await AsyncStorage.getItem('currentUser')
             const user = JSON.parse(res);
-            console.log('asyncstorageuser', user)
             await firebase.database().ref(`/users/${user.userId}`).once('value', (snap) => {
-                console.log("snapval", snap.val())
+             
                 this.setState({
                     user: snap.val()
                 })
@@ -31,15 +30,12 @@ export default class Chat extends React.Component {
             console.log(e)
         }
         const { suplierId, shopKeeperID } = this.props.navigation.state.params;
-        console.log("conersationid", suplierId, shopKeeperID);
         firebase.database().ref(`conversations`).orderByChild('users/' + suplierId).equalTo(true).on('value', (snap) => {
-            console.log("conversationdata", snap.val());
             if (snap.val() && Object.values(snap.val()).find(a => a.users[shopKeeperID])) {
                 const messages = [];
                 const val = snap.val();
                 const key = Object.keys(val).find(a => val[a].users[shopKeeperID]);
                 const res = val[key].chats
-                console.log('snapvalue', res)
                 if (res) {
                     for (let key in res) {
                         messages.push(res[key]);
@@ -57,17 +53,15 @@ export default class Chat extends React.Component {
         })
     }
 
-
-
-
     onSend(message) {
+        let uname;
         if (this.state.user.name !== null) {
-            console.log(this.state.user.name)
+            uname = this.state.user.name.slice(0, 2)
         }
-        console.log(message);
-        message = message.map(a => ({ ...a, createdAt: a.createdAt.getTime(), user: { name: 'M' }, }))
+     
+        message =  message.map(a => ({ ...a, createdAt: a.createdAt.getTime(), user: { name: uname }, }))
         const { key } = this.state;
-        console.log("conbersationId", key);
+     
         if (key) {
             firebase.database().ref(`/conversations/${key}/chats`).push(message[0]);
         }
@@ -76,9 +70,6 @@ export default class Chat extends React.Component {
     render() {
         const { user } = this.state;
         const id = firebase.auth().currentUser.uid
-        // console.log("render==>", user.userId)
-
-        console.log("state of user", this.state.user)
         return (
             <GiftedChat
                 messages={this.state.messages}

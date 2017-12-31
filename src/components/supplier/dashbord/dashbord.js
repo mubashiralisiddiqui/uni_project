@@ -35,18 +35,7 @@ export default class App extends React.Component {
             },
         };
     }
-    check() {
-        firebase.database().ref('oreder/').on('value', (data) => {
-            console.log(data.val())
-            let obj = data.val();
-            console.log("order obj", obj.lngtth)
-            // this.setState({
-            //     order: obj.name
-            // })
-        })
-    }
     componentWillMount() {
-        console.log('willmount runnign')
         OneSignal.addEventListener('received', this.onReceived);
         OneSignal.addEventListener('opened', this.onOpened);
         OneSignal.addEventListener('registered', this.onRegistered);
@@ -59,40 +48,26 @@ export default class App extends React.Component {
         OneSignal.removeEventListener('ids', this.onIds);
     }
     onReceived(notification) {
-        console.log("Notification received: ", notification);
     }
     onOpened(openResult) {
-        console.log('Messageby me: ', openResult.notification.payload.body);
-        console.log('Data: ', openResult.notification.payload.additionalData);
-        console.log('isActive: ', openResult.notification.isAppInFocus);
-        console.log('openResult: ', openResult);
     }
 
     onRegistered(notifData) {
-        console.log("Device had been registered for push notifications!", notifData);
     }
 
     onIds(device) {
-        console.log('Device info: ', device);
         OneSignal.addEventListener('ids', this.onIds);
     }
     componentDidMount() {
         let currentuser = firebase.auth().currentUser.uid
-        firebase.database().ref('users/' + currentuser).on('value', (data) => {
-            console.log(data.val())
+        firebase.database().ref('users/' + currentuser).on('value', (data) => {  
             let obj = data.val();
-            console.log("supplier obj", obj)
             this.setState({
                 username: obj.name
             })
         })
         firebase.database().ref('order/').on('value', (data) => {
-            console.log(data.val())
             let obj = data.val();
-            console.log("order obj", obj)
-            // this.setState({
-            //     order: obj.name
-            // })
         })
 
         navigator.geolocation.getCurrentPosition(
@@ -137,7 +112,6 @@ export default class App extends React.Component {
         const { navigate } = this.props.navigation
         return (
             <View style={styles.container}>
-                {console.log("regions==>", this.state.region)}
                 <Header
                     leftComponent={
                         <Icon
@@ -149,7 +123,7 @@ export default class App extends React.Component {
                         />
                     }
                     rightComponent={
-                        <Icon name='notifications' color="white" onPress={() => navigate('orderListScreen')} />
+                        <Icon name='home' color="white" onPress={() => navigate('SupplierDashBoardScreen')} />
                     }
                     centerComponent={
                         <Text style={{ textAlign: 'center', color: 'white' }}>
@@ -157,7 +131,7 @@ export default class App extends React.Component {
                         </Text>
                     }
                     //  centerComponent={{ text: "Circles " + this.state.circlenum, style: { color: "#fff" } }}
-                    outerContainerStyles={{ backgroundColor: "#009688" }}
+                    outerContainerStyles={{ backgroundColor: "#659EC7" }}
                 />
                 <MapView
                     ref="map"

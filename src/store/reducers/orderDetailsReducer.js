@@ -1,6 +1,5 @@
 import { OrderDetilActions } from '../actions/order_details_actions';
 
-
 const initialState = {
     orderDetails: []
 }

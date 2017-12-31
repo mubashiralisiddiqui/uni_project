@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-import { Button, List, ListItem, Icon, Card } from 'react-native-elements';
+import { Button, List, ListItem, Icon, Card, Header } from 'react-native-elements';
 import * as firebase from 'firebase';
 import { OrderDetailsMiddleware } from '../../../store/middleware/orderDetailMiddleWare';
 import ActionButton from 'react-native-action-button';
@@ -23,16 +23,28 @@ export default class OrderDetails extends React.Component {
             currentUser: uid
         })
     }
-   
+    static navigationOptions = {
+        // title:'back',
+        headerTitle: 'Order Info',
+        headerTitleStyle: {
+            color: '#ffff',
+            textAlign: 'center',
+            marginLeft: 70
+        },
+        headerTintColor: '#ffff',
+        headerStyle: {
+            backgroundColor: '#659EC7'
+        }
+
+
+    }
+
     render() {
         const { navigate } = this.props.navigation
         const params = this.props.navigation.state.params.data
-        console.log("params", params)
         return (
             <View>
-                {console.log(this.state.orderList, "state of list")}
-                <Text>Your Orders </Text>
-                <ScrollView>
+                <ScrollView contentContainerStyle={{ marginTop: 60 }}>
                     <Card
                         title="order details"
                     >
@@ -40,10 +52,8 @@ export default class OrderDetails extends React.Component {
                             <View style={{ flexDirection: 'row', flex: 1 }}>
                                 <Icon name="message" color='#00aced' />
                                 <Text style={{ marginLeft: 20 }}>on {params.date}</Text>
-                                <Text style={{ marginLeft: 20 }}>at {params.time}</Text>
                             </View>
                             {params.items.map((u, i) => {
-                                console.log(',map params data', u)
                                 return (
                                     <View key={i}>
                                         <Text>{u}</Text>
@@ -72,7 +82,7 @@ export default class OrderDetails extends React.Component {
                             <Button
                                 title="contact"
                                 icon={{ name: 'send' }}
-                                buttonStyle={{ backgroundColor: '#0097A7', borderRadius: 100 }}
+                                buttonStyle={{ backgroundColor: '#659EC7', borderRadius: 100, marginTop: 20 }}
                                 onPress={() => { navigate('chatScreen', { suplierId: params.sk_info.userId, shopKeeperID: this.state.currentUser }) }}
                             />
 
@@ -80,15 +90,11 @@ export default class OrderDetails extends React.Component {
                     </Card>
 
                 </ScrollView>
-
-
             </View>
         )
     }
 }
-//sk_info.name
-//sk_info.email
-//sk_info.contact
+
 
 
 

@@ -10,7 +10,6 @@ import {
 } from "react-native-elements";
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
-// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
 import styles from './style'
 import { signupStyles } from "./style";
 import { supplierSignup } from '../../../store/middleware/authMiddleWare';
@@ -39,10 +38,8 @@ class SupplierSignup extends React.Component {
             contact: this.state.contact
         }
         this.props.signup(obj, navigate)
-
     }
     render() {
-        console.log(this.state.contact)
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAwareScrollView>
@@ -52,10 +49,9 @@ class SupplierSignup extends React.Component {
                             text: " Supplier Signup",
                             style: { color: "#fff" }
                         }}
-                        outerContainerStyles={{ backgroundColor: "#0097A7" }}
+                        outerContainerStyles={{ backgroundColor: "#659EC7" }}
                     />
                     <View style={signupStyles.form}>
-                        <Text style={signupStyles.formHeading}>Signup Form</Text>
                         <View style={signupStyles.formFields}>
                             <View>
                                 <FormLabel>First Name</FormLabel>
@@ -63,7 +59,6 @@ class SupplierSignup extends React.Component {
                                     onChangeText={txt => this.setState({ firstName: txt })}
                                     value={this.state.firstName}
                                 />
-
                                 <FormLabel>Last Name</FormLabel>
                                 <FormInput
                                     onChangeText={txt => this.setState({ lastName: txt })}

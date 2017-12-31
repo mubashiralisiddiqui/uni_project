@@ -10,7 +10,8 @@ import OrderDetails from './supplier/orderDetails/orderDetails';
 import SupplierList from './shopKeeper/supplierList/supplierList';
 import SupplierDetails from './shopKeeper/suplierDetail/suplierDetail';
 import Chat from './shopKeeper/chat/chat'
-
+import ShopkeepersList from './supplier/shopkeepersList/shopkeeperList';
+import ShopkeeperDetails from './supplier/shopkeeperDetails/shopkeeperDetails'
 export {
     ShopKeeperSignup,
     SupplierSignup,
@@ -22,6 +23,8 @@ export {
     OrderList,
     OrderDetails,
     SupplierList,
+    ShopkeepersList,
+    ShopkeeperDetails,
     SupplierDetails,
     Chat
 }
