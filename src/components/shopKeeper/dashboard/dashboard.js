@@ -34,8 +34,23 @@ export default class App extends React.Component {
                 latitudeDelta: LATITUDE_DELTA,
                 longitudeDelta: LONGITUDE_DELTA
             },
-        };
-    }
+            markers: [{
+                title: 'hello',
+                coordinates: {
+                    latitude: 3.148561,
+                    longitude: 101.652778
+                },
+            },
+            {
+                title: 'hello',
+                coordinates: {
+                    latitude: 3.149771,
+                    longitude: 101.655449
+                },
+            }]
+        }
+    };
+
     componentDidMount() {
         let currentuser = firebase.auth().currentUser.uid
         firebase.database().ref('users/' + currentuser).on('value', (data) => {
@@ -69,6 +84,7 @@ export default class App extends React.Component {
 
             this.onRegionChange(newRegion);
         });
+        firebase.database().ref('users/' + currentuser).update({ region:this.state.region })
     }
 
     componentWillUnmount() {
@@ -79,8 +95,8 @@ export default class App extends React.Component {
         this.setState({ region });
     }
     static navigationOptions = {
-      header:null,
-      
+        header: null,
+
     }
     render() {
         const { navigate } = this.props.navigation
@@ -112,6 +128,23 @@ export default class App extends React.Component {
                     showsUserLocation={true}
                     followUserLocation={true}
                 >
+                    {/* {this.state.markers.map((marker) => {
+                        console.log(marker)
+                        return (
+                            <MapView.Marker
+                            coordinate={marker.coordinates}
+                            title={marker.title}
+                            />
+                        )
+                    })} */}
+                    {/* {this.state.markers.map(marker =>{ (
+                       
+                        <MapView.Marker
+                            coordinate={marker.coordinates}
+                            title={marker.title}
+                        />
+                    )})
+                    } */}
                     <MapView.Marker draggable
                         coordinate={this.state.region}
                     // onDragEnd={(e) => this.setState({ x: e.nativeEvent.coordinate })}

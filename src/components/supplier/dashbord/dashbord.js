@@ -27,6 +27,10 @@ export default class App extends React.Component {
         super(props)
         this.state = {
             username: '',
+            marker: [{
+                latitude: LATITUDE,
+                longitude: LONGITUDE,
+            }],
             region: {
                 latitude: LATITUDE,
                 longitude: LONGITUDE,
@@ -36,6 +40,14 @@ export default class App extends React.Component {
         };
     }
     componentWillMount() {
+        firebase.database().ref('userloc/').on('value', (data) => {
+            // let obj = Object.values(data.val())
+
+            this.setState({
+                marker: Object.values(data.val()).map(a => a.region)
+            })
+
+        })
         OneSignal.addEventListener('received', this.onReceived);
         OneSignal.addEventListener('opened', this.onOpened);
         OneSignal.addEventListener('registered', this.onRegistered);
@@ -60,7 +72,7 @@ export default class App extends React.Component {
     }
     componentDidMount() {
         let currentuser = firebase.auth().currentUser.uid
-        firebase.database().ref('users/' + currentuser).on('value', (data) => {  
+        firebase.database().ref('users/' + currentuser).on('value', (data) => {
             let obj = data.val();
             this.setState({
                 username: obj.name
@@ -95,6 +107,7 @@ export default class App extends React.Component {
 
             this.onRegionChange(newRegion);
         });
+        firebase.database().ref('userloc/' + currentuser).update({ region: this.state.region })
     }
 
     componentWillUnmount() {
@@ -110,6 +123,7 @@ export default class App extends React.Component {
 
     render() {
         const { navigate } = this.props.navigation
+        console.log("markerstae in render", this.state.marker)
         return (
             <View style={styles.container}>
                 <Header
@@ -142,10 +156,17 @@ export default class App extends React.Component {
                     showsUserLocation={true}
                     followUserLocation={true}
                 >
-                    <MapView.Marker draggable
-                        coordinate={this.state.region}
-                    // onDragEnd={(e) => this.setState({ x: e.nativeEvent.coordinate })}
-                    />
+                    {/* {this.state.marker ?
+                        this.state.marker.map((v, i) => {
+                            console.log("map marker", v)
+                            return (
+                                <MapView.Marker coordinate={v} key={i} />
+                            )
+                        })
+
+                        : console.log('errororo')} */}
+                         <MapView.Marker coordinate={this.state.region} />
+
                 </MapView>
 
             </View>

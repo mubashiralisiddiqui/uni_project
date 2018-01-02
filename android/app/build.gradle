@@ -123,10 +123,10 @@ android {
     }
     signingConfigs {
         release {
-                storeFile file('../my-release-key.keystore')
-                storePassword "mubashir"
-                keyAlias "mubashir"
-                keyPassword "mubashir"    
+                storeFile file('./my-release-key.keystore')
+                storePassword "123456"
+                keyAlias "123456"
+                keyPassword "123456"    
         }
     }
     buildTypes {
